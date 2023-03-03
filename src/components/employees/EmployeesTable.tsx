@@ -3,57 +3,60 @@ import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 
 interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
+  id: string;
+  full_name: string;
+  current_team: string;
+  mobile_number: string;
+  email_address: string;
+  designation: string;
+  billable_hours: string;
 }
 
 const columns: ColumnsType<DataType> = [
   {
-    title: 'Name',
-    dataIndex: 'name',
-    key: 'name',
-    render: (text) => <a>{text}</a>,
+    title: 'ID',
+    dataIndex: 'id',
+    key: 'id',
   },
   {
-    title: 'Age',
-    dataIndex: 'age',
-    key: 'age',
+    title: 'Full Name',
+    dataIndex: 'full_name',
+    key: 'full_name',
   },
   {
-    title: 'Address',
-    dataIndex: 'address',
-    key: 'address',
+    title: 'Current Team',
+    dataIndex: 'current_team',
+    key: 'current_team',
   },
   {
-    title: 'Tags',
-    key: 'tags',
-    dataIndex: 'tags',
-    render: (_, { tags }) => (
-      <>
-        {tags.map((tag) => {
-          let color = tag.length > 5 ? 'geekblue' : 'green';
-          if (tag === 'loser') {
-            color = 'volcano';
-          }
-          return (
-            <Tag color={color} key={tag}>
-              {tag.toUpperCase()}
-            </Tag>
-          );
-        })}
-      </>
-    ),
+    title: 'Mobile Number',
+    dataIndex: 'mobile_number',
+    key: 'mobile_number',
   },
+  {
+    title: 'Email Address',
+    dataIndex: 'email_address',
+    key: 'email_address',
+  },
+  {
+    title: 'Designation',
+    dataIndex: 'designation',
+    key: 'designation',
+  },
+  {
+    title: 'Billable Hours',
+    dataIndex: 'billable_hours',
+    key: 'billable_hours',
+  },
+
   {
     title: 'Action',
     key: 'action',
     render: (_, record) => (
       <Space size='middle'>
-        <a>Invite {record.name}</a>
-        <a>Delete</a>
+        <p>view</p>
+        <p>edit</p>
+        <p>delete</p>
       </Space>
     ),
   },
@@ -61,25 +64,13 @@ const columns: ColumnsType<DataType> = [
 
 const data: DataType[] = [
   {
-    key: '1',
-    name: 'John Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-    tags: ['nice', 'developer'],
-  },
-  {
-    key: '2',
-    name: 'Jim Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-    tags: ['loser'],
-  },
-  {
-    key: '3',
-    name: 'Joe Black',
-    age: 32,
-    address: 'Sydney No. 1 Lake Park',
-    tags: ['cool', 'teacher'],
+    id: '1',
+    full_name: 'David Doe',
+    current_team: 'Fabrication Team 1',
+    mobile_number: '+61 8386 3482',
+    email_address: 'david33@gmail.com',
+    designation: 'Electrical',
+    billable_hours: '40 hours/week',
   },
 ];
 
