@@ -1,5 +1,9 @@
-import React from 'react';
+import { AddEmployeeTable } from '~/components';
 
 export function AddEmployee() {
-  return <div>AddEmployee</div>;
+  return (
+    <div>
+      <AddEmployeeTable />
+    </div>
+  );
 }
