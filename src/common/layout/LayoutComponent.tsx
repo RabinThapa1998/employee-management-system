@@ -58,9 +58,7 @@ export function LayoutComponent() {
             minHeight: 280,
             background: colorBgContainer,
           }}
-        >
-          Content
-        </Content>
+        ></Content>
       </Layout>
     </Layout>
   );
