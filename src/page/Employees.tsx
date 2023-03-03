@@ -1,5 +1,8 @@
-import React from 'react';
-
+import { EmployeesTable } from '~/components';
 export function Employees() {
-  return <div>Employees</div>;
+  return (
+    <div>
+      <EmployeesTable />
+    </div>
+  );
 }

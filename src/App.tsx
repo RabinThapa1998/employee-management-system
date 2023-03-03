@@ -5,18 +5,24 @@ function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <Teams />,
+      element: (
+        <LayoutComponent>
+          <Teams />
+        </LayoutComponent>
+      ),
     },
     {
       path: '/employees',
-      element: <Employees />,
+      element: (
+        <LayoutComponent>
+          <Employees />
+        </LayoutComponent>
+      ),
     },
   ]);
   return (
     <div>
-      <LayoutComponent>
-        <RouterProvider router={router} />
-      </LayoutComponent>
+      <RouterProvider router={router} />
     </div>
   );
 }
