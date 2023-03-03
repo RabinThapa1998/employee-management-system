@@ -13,6 +13,9 @@ module.exports = {
           primary: 'var(--color-gray-primary)',
         },
       },
+      borderRadius: {
+        primary: '5px',
+      },
     },
     plugins: [],
   },

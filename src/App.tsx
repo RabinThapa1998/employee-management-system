@@ -1,11 +1,21 @@
 import { LayoutComponent } from '~/common';
-import { Teams } from '~/page';
-
+import { Teams, Employees } from '~/page';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 function App() {
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Teams />,
+    },
+    {
+      path: '/employees',
+      element: <Employees />,
+    },
+  ]);
   return (
     <div>
       <LayoutComponent>
-        <Teams />
+        <RouterProvider router={router} />
       </LayoutComponent>
     </div>
   );
