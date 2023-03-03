@@ -31,7 +31,7 @@ function OverviewCard() {
   );
 }
 
-export function LayoutComponent({ children }: { children: React.ReactNode }) {
+export function ListingLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -78,18 +78,20 @@ export function LayoutComponent({ children }: { children: React.ReactNode }) {
             <OverviewCard />
             <OverviewCard />
           </div>
-          <div className='flex flex-row gap-5 h-[58px]'>
-            <Link
-              to={'/'}
-              className='bg-[#F1F1F1] flex flex-row items-center justify-center px-5 rounded-t-primary'
-            >
-              <h3>Teams</h3>
-            </Link>
-            <Link to={'/employees'}>
-              <h3>Employees</h3>
-            </Link>
+          <div className='bg-white rounded-primary pt-[15px] mt-5'>
+            <div className='flex flex-row gap-5 h-[58px]'>
+              <Link
+                to={'/'}
+                className='bg-[#F1F1F1] flex flex-row items-center justify-center px-5 rounded-t-primary'
+              >
+                <h3>Teams</h3>
+              </Link>
+              <Link to={'/employees'}>
+                <h3>Employees</h3>
+              </Link>
+            </div>
+            {children}
           </div>
-          {children}
         </Content>
       </Layout>
     </Layout>

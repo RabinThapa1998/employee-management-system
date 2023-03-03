@@ -1,22 +1,30 @@
-import { LayoutComponent } from '~/common';
-import { Teams, Employees } from '~/page';
+import { ListingLayout, MainLayout } from '~/common';
+import { Teams, Employees, AddEmployee } from '~/page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
       element: (
-        <LayoutComponent>
+        <ListingLayout>
           <Teams />
-        </LayoutComponent>
+        </ListingLayout>
       ),
     },
     {
       path: '/employees',
       element: (
-        <LayoutComponent>
+        <ListingLayout>
           <Employees />
-        </LayoutComponent>
+        </ListingLayout>
+      ),
+    },
+    {
+      path: '/add-employee',
+      element: (
+        <MainLayout>
+          <AddEmployee />
+        </MainLayout>
       ),
     },
   ]);

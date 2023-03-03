@@ -1,1 +1,2 @@
-export * from './LayoutComponent';
+export * from './ListingLayout';
+export * from './MainLayout';
