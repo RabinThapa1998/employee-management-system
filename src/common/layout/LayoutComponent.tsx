@@ -10,7 +10,7 @@ import { Layout, Menu, theme } from 'antd';
 
 const { Header, Sider, Content } = Layout;
 
-export function LayoutComponent() {
+export function LayoutComponent({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
@@ -51,14 +51,7 @@ export function LayoutComponent() {
             onClick: () => setCollapsed(!collapsed),
           })}
         </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-          }}
-        ></Content>
+        <Content className='px-[22px] py-5'>{children}</Content>
       </Layout>
     </Layout>
   );

@@ -19,12 +19,11 @@
 }
 
 .layout-container {
-  min-height: 100vh;
+  @apply min-h-screen;
 }
 
 .layout-container__menu {
-  background-color: var(--color-gray-primary);
-  height: 100vh;
+  @apply min-h-screen h-full bg-gray-primary;
 }
 
 /* h1 {

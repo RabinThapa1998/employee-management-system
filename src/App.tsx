@@ -1,9 +1,12 @@
 import { LayoutComponent } from '~/common';
+import { Teams } from '~/page';
 
 function App() {
   return (
     <div>
-      <LayoutComponent />
+      <LayoutComponent>
+        <Teams />
+      </LayoutComponent>
     </div>
   );
 }
