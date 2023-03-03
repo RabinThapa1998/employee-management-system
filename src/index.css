@@ -5,3 +5,18 @@
   padding: 0;
   margin: 0;
 }
+
+:root {
+  --color-brand-primary: #1e83f7;
+  --color-brand-secondary: #ffac1c;
+  --color-gray-primary: #24252a;
+}
+
+.layout-container {
+  min-height: 100vh;
+}
+
+.layout-container__menu {
+  background-color: var(--color-gray-primary);
+  height: 100vh;
+}

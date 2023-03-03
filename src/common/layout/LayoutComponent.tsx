@@ -17,10 +17,11 @@ export function LayoutComponent() {
   } = theme.useToken();
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout className='layout-container'>
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <div className='logo' />
         <Menu
+          className='layout-container__menu'
           theme='dark'
           mode='inline'
           defaultSelectedKeys={['1']}
