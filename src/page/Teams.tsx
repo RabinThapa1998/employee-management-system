@@ -1,5 +1,5 @@
 import { icons } from '~/assets';
-
+import { Link } from 'react-router-dom';
 function OverviewCard() {
   return (
     <div
@@ -28,7 +28,16 @@ export function Teams() {
         <OverviewCard />
         <OverviewCard />
       </div>
-      <div className='bg-white rounded-primary'></div>
+      <div className='bg-white rounded-primary'>
+        <div className='flex flex-row gap-5'>
+          <Link to={'/'}>
+            <h3>Teams</h3>
+          </Link>
+          <Link to={'/employees'}>
+            <h3>Employees</h3>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 }
