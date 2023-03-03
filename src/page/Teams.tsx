@@ -28,9 +28,12 @@ export function Teams() {
         <OverviewCard />
         <OverviewCard />
       </div>
-      <div className='bg-white rounded-primary'>
-        <div className='flex flex-row gap-5'>
-          <Link to={'/'}>
+      <div className='bg-white rounded-primary pt-[15px] mt-5'>
+        <div className='flex flex-row gap-5 h-[58px]'>
+          <Link
+            to={'/'}
+            className='bg-[#F1F1F1] flex flex-row items-center justify-center px-5 rounded-t-primary'
+          >
             <h3>Teams</h3>
           </Link>
           <Link to={'/employees'}>
