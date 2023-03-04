@@ -1,18 +1,8 @@
 import React from 'react';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-
-interface DataType {
-  id: string;
-  full_name: string;
-  current_team: string;
-  mobile_number: string;
-  email_address: string;
-  designation: string;
-  billable_hours: string;
-}
-
-const columns: ColumnsType<DataType> = [
+import { IEmployeeSummary } from '~/types';
+const columns: ColumnsType<IEmployeeSummary> = [
   {
     title: 'ID',
     dataIndex: 'id',
@@ -62,7 +52,7 @@ const columns: ColumnsType<DataType> = [
   },
 ];
 
-const data: DataType[] = [
+const data: IEmployeeSummary[] = [
   {
     id: '1',
     full_name: 'David Doe',

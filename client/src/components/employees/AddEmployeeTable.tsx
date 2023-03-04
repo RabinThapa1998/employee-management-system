@@ -13,9 +13,7 @@ import {
 } from 'antd';
 import './style.css';
 import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
-const onFinish = (values: any) => {
-  console.log('Success:', values);
-};
+import { add, useAppDispatch } from '~/global-states';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
@@ -145,6 +143,11 @@ const billableInformation = [
 
 const { useToken } = theme;
 export function AddEmployeeTable() {
+  const dispatch = useAppDispatch();
+  const onFinish = (values: any) => {
+    dispatch(add(values));
+  };
+
   const { token } = useToken();
   return (
     <div className='rounded-primary bg-white px-[60px] py-[30px]'>
