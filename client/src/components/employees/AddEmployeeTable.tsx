@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, Divider, theme } from 'antd';
 import './style.css';
+import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
 const onFinish = (values: any) => {
   console.log('Success:', values);
 };
@@ -8,76 +9,95 @@ const onFinish = (values: any) => {
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
-const basicInformation = [
+interface IForm {
+  name: string;
+  label: string;
+  placeholder?: string;
+  options?: string[];
+  type: 'text' | 'number' | 'date' | 'select' | 'checkbox' | 'time';
+}
+
+const basicInformation: IForm[] = [
   {
     name: 'name',
     label: 'Name',
     placeholder: 'Enter name',
+    type: 'text',
   },
   {
     name: 'middle_name',
     label: 'Middle Name',
     placeholder: 'Enter middle name',
+    type: 'text',
   },
   {
     name: 'surname',
     label: 'Surname',
     placeholder: 'Enter surname',
+    type: 'text',
   },
   {
     name: 'dob',
     label: 'Birth Date',
     placeholder: 'DD/MM/YYYY',
+    type: 'date',
   },
   {
     name: 'gender',
     label: 'Gender',
     options: ['male', 'female', 'other'],
     placeholder: 'Choose Gender',
+    type: 'select',
   },
   {
     name: 'address',
     label: 'Address',
     placeholder: 'Enter Address',
+    type: 'text',
   },
   {
     name: 'phone_number',
     label: 'Phone Number',
     placeholder: 'Enter Phone Number',
+    type: 'text',
   },
   {
     name: 'email',
     label: 'Email Address',
     placeholder: 'Enter Email Address',
+    type: 'text',
   },
 ];
-const formData = [
-  {
-    name: 'profile',
-    label: 'Profile Image',
-  },
-
+const workingHours: IForm[] = [
   {
     name: 'starts_at',
     label: 'Starts At',
     placeholder: 'HH-MM',
+    type: 'time',
   },
   {
     name: 'ends_in',
     label: 'Ends In',
     placeholder: 'HH-MM',
+    type: 'time',
   },
+];
+const jobs: IForm[] = [
   {
     name: 'job_position',
     label: 'Job Position',
     placeholder: 'Enter Job Position',
+    type: 'text',
   },
   {
     name: 'team',
     label: 'Team',
     placeholder: 'Choose Team',
     options: ['team1', 'team2', 'team3'],
+    type: 'select',
   },
+];
+const billableInformation = [
   {
     name: 'is_billable',
     label: 'This user is billable',
@@ -89,7 +109,9 @@ const formData = [
   },
 ];
 
+const { useToken } = theme;
 export function AddEmployeeTable() {
+  const { token } = useToken();
   return (
     <div className='rounded-primary bg-white px-[60px] py-[30px]'>
       <Form
@@ -109,29 +131,69 @@ export function AddEmployeeTable() {
             <button>Upload Profile Image</button>
           </div>
         </div>
-        <div className='add-employee-form mt-[50px]'>
-          <div className='add-employee-form__left '>
-            <h2 className='self-start'>Basic Information</h2>
-          </div>
 
-          <div className='add-employee-form__right flex flex-row gap-x-[30px] flex-wrap '>
-            {basicInformation.map((item) => (
-              <Form.Item
-                label={item.label}
-                name={item.name}
-                key={item.name}
-                className='w-[398px]'
-                rules={[{ required: true, message: 'required' }]}
-              >
-                <Input />
-              </Form.Item>
-            ))}
-          </div>
-        </div>
+        <AddEmployeeFormSectionWrapper title='Basic Information'>
+          {basicInformation.map((item) => (
+            <Form.Item
+              label={item.label}
+              name={item.name}
+              key={item.name}
+              className='w-[398px]'
+              rules={[{ required: true, message: 'required' }]}
+            >
+              <Input placeholder={item.placeholder} />
+            </Form.Item>
+          ))}
+        </AddEmployeeFormSectionWrapper>
+        <Divider />
 
-        <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type='primary' htmlType='submit'>
-            Submit
+        <AddEmployeeFormSectionWrapper title='Working Hours'>
+          {workingHours.map((item) => (
+            <Form.Item
+              label={item.label}
+              name={item.name}
+              key={item.name}
+              className='w-[398px]'
+              rules={[{ required: true, message: 'required' }]}
+            >
+              <Input placeholder={item.placeholder} />
+            </Form.Item>
+          ))}
+        </AddEmployeeFormSectionWrapper>
+
+        <Divider />
+        <AddEmployeeFormSectionWrapper title='Jobs'>
+          {jobs.map((item) => (
+            <Form.Item
+              label={item.label}
+              name={item.name}
+              key={item.name}
+              className='w-[398px]'
+              rules={[{ required: true, message: 'required' }]}
+            >
+              <Input placeholder={item.placeholder} />
+            </Form.Item>
+          ))}
+        </AddEmployeeFormSectionWrapper>
+
+        <Divider />
+        <AddEmployeeFormSectionWrapper title='Billable Information'>
+          {billableInformation.map((item) => (
+            <Form.Item
+              label={item.label}
+              name={item.name}
+              key={item.name}
+              className='w-[398px]'
+              rules={[{ required: true, message: 'required' }]}
+            >
+              <Input placeholder={item.placeholder} />
+            </Form.Item>
+          ))}
+        </AddEmployeeFormSectionWrapper>
+
+        <Form.Item>
+          <Button type='primary' htmlType='submit' style={{ backgroundColor: token.colorPrimary }}>
+            Save
           </Button>
         </Form.Item>
       </Form>

@@ -1,6 +1,8 @@
 import { ListingLayout, MainLayout } from '~/common';
 import { Teams, Employees, AddEmployee } from '~/page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { ConfigProvider } from 'antd';
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,9 +30,20 @@ function App() {
       ),
     },
   ]);
+
   return (
     <div>
-      <RouterProvider router={router} />
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#1e83f7',
+            colorWarning: '#ffac1c',
+            colorSuccess: '#20bc08',
+          },
+        }}
+      >
+        <RouterProvider router={router} />
+      </ConfigProvider>
     </div>
   );
 }
