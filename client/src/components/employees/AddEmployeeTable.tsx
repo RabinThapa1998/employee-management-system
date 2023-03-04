@@ -1,5 +1,15 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input, Divider, theme } from 'antd';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  Divider,
+  theme,
+  Select,
+  DatePicker,
+  TimePicker,
+} from 'antd';
 import './style.css';
 import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
 const onFinish = (values: any) => {
@@ -9,11 +19,15 @@ const onFinish = (values: any) => {
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
+type option = {
+  value: string;
+  label: string;
+}[];
 interface IForm {
   name: string;
   label: string;
   placeholder?: string;
-  options?: string[];
+  options?: option;
   type: 'text' | 'number' | 'date' | 'select' | 'checkbox' | 'time';
 }
 
@@ -45,7 +59,20 @@ const basicInformation: IForm[] = [
   {
     name: 'gender',
     label: 'Gender',
-    options: ['male', 'female', 'other'],
+    options: [
+      {
+        value: 'male',
+        label: 'Male',
+      },
+      {
+        value: 'female',
+        label: 'Female',
+      },
+      {
+        value: 'other',
+        label: 'Other',
+      },
+    ],
     placeholder: 'Choose Gender',
     type: 'select',
   },
@@ -93,7 +120,12 @@ const jobs: IForm[] = [
     name: 'team',
     label: 'Team',
     placeholder: 'Choose Team',
-    options: ['team1', 'team2', 'team3'],
+    options: [
+      {
+        value: '',
+        label: '',
+      },
+    ],
     type: 'select',
   },
 ];
@@ -133,17 +165,51 @@ export function AddEmployeeTable() {
         </div>
 
         <AddEmployeeFormSectionWrapper title='Basic Information'>
-          {basicInformation.map((item) => (
-            <Form.Item
-              label={item.label}
-              name={item.name}
-              key={item.name}
-              className='w-[398px]'
-              rules={[{ required: true, message: 'required' }]}
-            >
-              <Input placeholder={item.placeholder} />
-            </Form.Item>
-          ))}
+          {basicInformation.map((item) => {
+            if (item.name === 'gender') {
+              return (
+                <Form.Item
+                  label={item.label}
+                  name={item.name}
+                  key={item.name}
+                  className='w-[398px]'
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <Select
+                    placeholder={item.placeholder}
+                    options={item.options}
+                    className='w-full'
+                  />
+                </Form.Item>
+              );
+            }
+            if (item.name === 'dob') {
+              return (
+                <Form.Item
+                  label={item.label}
+                  name={item.name}
+                  key={item.name}
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <DatePicker
+                    placeholder={item.placeholder}
+                    className='w-[398px]'
+                    format={'DD/MM/YYYY'}
+                  />
+                </Form.Item>
+              );
+            }
+            return (
+              <Form.Item
+                label={item.label}
+                name={item.name}
+                key={item.name}
+                rules={[{ required: true, message: 'required' }]}
+              >
+                <Input placeholder={item.placeholder} className='w-[398px]' />
+              </Form.Item>
+            );
+          })}
         </AddEmployeeFormSectionWrapper>
         <Divider />
 
@@ -153,46 +219,77 @@ export function AddEmployeeTable() {
               label={item.label}
               name={item.name}
               key={item.name}
-              className='w-[398px]'
               rules={[{ required: true, message: 'required' }]}
             >
-              <Input placeholder={item.placeholder} />
+              <TimePicker placeholder={item.placeholder} format={'HH:mm'} className='w-[398px]' />
             </Form.Item>
           ))}
         </AddEmployeeFormSectionWrapper>
 
         <Divider />
         <AddEmployeeFormSectionWrapper title='Jobs'>
-          {jobs.map((item) => (
-            <Form.Item
-              label={item.label}
-              name={item.name}
-              key={item.name}
-              className='w-[398px]'
-              rules={[{ required: true, message: 'required' }]}
-            >
-              <Input placeholder={item.placeholder} />
-            </Form.Item>
-          ))}
+          {jobs.map((item) => {
+            if (item.name === 'team') {
+              return (
+                <Form.Item
+                  label={item.label}
+                  name={item.name}
+                  key={item.name}
+                  className='w-[398px]'
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <Select
+                    placeholder={item.placeholder}
+                    options={item.options}
+                    className='w-full'
+                  />
+                </Form.Item>
+              );
+            }
+            return (
+              <Form.Item
+                label={item.label}
+                name={item.name}
+                key={item.name}
+                rules={[{ required: true, message: 'required' }]}
+              >
+                <Input placeholder={item.placeholder} className='w-[398px]' />
+              </Form.Item>
+            );
+          })}
         </AddEmployeeFormSectionWrapper>
 
         <Divider />
         <AddEmployeeFormSectionWrapper title='Billable Information'>
-          {billableInformation.map((item) => (
-            <Form.Item
-              label={item.label}
-              name={item.name}
-              key={item.name}
-              className='w-[398px]'
-              rules={[{ required: true, message: 'required' }]}
-            >
-              <Input placeholder={item.placeholder} />
-            </Form.Item>
-          ))}
+          {billableInformation.map((item) => {
+            if (item.name === 'is_billable') {
+              return (
+                <Form.Item
+                  name={item.name}
+                  key={item.name}
+                  className='w-full'
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <Checkbox>{item.label}</Checkbox>
+                </Form.Item>
+              );
+            }
+            return (
+              <Form.Item
+                label={item.label}
+                name={item.name}
+                key={item.name}
+                className='w-full'
+                rules={[{ required: true, message: 'required' }]}
+              >
+                <TimePicker placeholder={item.placeholder} className='w-[398px]' />
+              </Form.Item>
+            );
+          })}
         </AddEmployeeFormSectionWrapper>
 
         <Form.Item>
-          <Button type='primary' htmlType='submit' style={{ backgroundColor: token.colorPrimary }}>
+          <Button type='primary' htmlType='submit'>
             Save
           </Button>
         </Form.Item>
