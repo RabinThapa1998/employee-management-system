@@ -20,6 +20,6 @@ export const employeeSlice = createSlice({
 });
 
 export const { add } = employeeSlice.actions;
-export const employeeSelector = (state: RootState) => state.employee;
+export const employeeSelector = (state: RootState): IEmployeeData[] => state.employee;
 
 export default employeeSlice.reducer;

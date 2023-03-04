@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Space, Table, Tag } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { IEmployeeSummary } from '~/types';
+import { employeeSelector, useAppSelector } from '~/global-states';
 const columns: ColumnsType<IEmployeeSummary> = [
   {
     title: 'ID',
@@ -64,4 +65,23 @@ const data: IEmployeeSummary[] = [
   },
 ];
 
-export const EmployeesTable: React.FC = () => <Table columns={columns} dataSource={data} />;
+export function EmployeesTable() {
+  const employeeList = useAppSelector(employeeSelector);
+  console.log('🚀 ~ file: EmployeesTable.tsx:70 ~ EmployeesTable ~ employeeList:', employeeList);
+
+  const employeeFormattedData = useMemo(() => {
+    const temp = employeeList.map((item, idx) => {
+      return {
+        id: idx,
+        full_name: item.name + ' ' + item.middle_name + ' ' + item.surname,
+        current_team: item.team,
+        mobile_number: item.phone_number,
+        email_address: item.email,
+        designation: item.job_position,
+        billable_hours: item.billable_hrs,
+      };
+    });
+    return temp;
+  }, [employeeList]);
+  return <Table columns={columns} dataSource={employeeFormattedData} />;
+}
