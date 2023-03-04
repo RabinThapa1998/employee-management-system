@@ -1,3 +1,4 @@
+import { Typography } from 'antd';
 import React from 'react';
 import './style.css';
 export function AddEmployeeFormSectionWrapper({
@@ -10,7 +11,9 @@ export function AddEmployeeFormSectionWrapper({
   return (
     <div className='add-employee-form mt-[50px]'>
       <div className='add-employee-form__left '>
-        <h2 className='self-start'>{title}</h2>
+        <Typography.Title className='self-start' level={3}>
+          {title}
+        </Typography.Title>
       </div>
 
       <div className='add-employee-form__right flex flex-row gap-x-[30px] flex-wrap '>

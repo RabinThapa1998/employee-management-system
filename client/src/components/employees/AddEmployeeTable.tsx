@@ -9,6 +9,7 @@ import {
   Select,
   DatePicker,
   TimePicker,
+  Typography,
 } from 'antd';
 import './style.css';
 import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
@@ -122,8 +123,8 @@ const jobs: IForm[] = [
     placeholder: 'Choose Team',
     options: [
       {
-        value: '',
-        label: '',
+        value: 'available',
+        label: 'Available',
       },
     ],
     type: 'select',
@@ -133,6 +134,7 @@ const billableInformation = [
   {
     name: 'is_billable',
     label: 'This user is billable',
+    type: 'checkbox',
   },
   {
     name: 'billable_hrs',
@@ -160,7 +162,7 @@ export function AddEmployeeTable() {
           </div>
           <div className='add-employee-form__right flex flex-col gap-[10px] items-start self-center'>
             <h2>Profile image</h2>
-            <button>Upload Profile Image</button>
+            <Button style={{ backgroundColor: token.colorSuccess }}>Upload Profile Image</Button>
           </div>
         </div>
 
@@ -264,12 +266,7 @@ export function AddEmployeeTable() {
           {billableInformation.map((item) => {
             if (item.name === 'is_billable') {
               return (
-                <Form.Item
-                  name={item.name}
-                  key={item.name}
-                  className='w-full'
-                  rules={[{ required: true, message: 'required' }]}
-                >
+                <Form.Item name={item.name} key={item.name} className='w-full'>
                   <Checkbox>{item.label}</Checkbox>
                 </Form.Item>
               );
@@ -289,7 +286,14 @@ export function AddEmployeeTable() {
         </AddEmployeeFormSectionWrapper>
 
         <Form.Item>
-          <Button type='primary' htmlType='submit'>
+          <Button
+            type='primary'
+            htmlType='submit'
+            style={{
+              backgroundColor: token.colorWarning,
+              width: '146px',
+            }}
+          >
             Save
           </Button>
         </Form.Item>
