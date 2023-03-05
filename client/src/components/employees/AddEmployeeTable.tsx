@@ -17,6 +17,8 @@ import {
 } from 'antd';
 import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
+import { Icons } from '~/assets';
+import { CloudUploadOutlined } from '@ant-design/icons';
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
@@ -178,7 +180,9 @@ export function AddEmployeeTable() {
                   token: { colorPrimary: token.colorSuccess },
                 }}
               >
-                <Button type='primary'>Upload Profile Image</Button>
+                <Button type='primary' icon={<Icons.Upload />}>
+                  Upload Profile Image
+                </Button>
               </ConfigProvider>
             </Col>
           </Row>

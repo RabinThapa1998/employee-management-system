@@ -7,7 +7,7 @@ import {
   VideoCameraOutlined,
 } from '@ant-design/icons';
 import { Layout, Menu, theme } from 'antd';
-import { icons } from '~/assets';
+import { Icons } from '~/assets';
 import { Link } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
@@ -25,7 +25,7 @@ function OverviewCard() {
         className='h-[42px] w-[42px] flex flex-row items-center justify-center rounded-primary
        bg-[#FFFFFF33]'
       >
-        {<icons.teams />}
+        {<Icons.Teams />}
       </div>
     </div>
   );

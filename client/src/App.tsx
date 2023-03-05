@@ -65,6 +65,9 @@ function App() {
                   colorText: '#656669',
                   fontWeightStrong: 600,
                 },
+                Button: {
+                  controlHeight: 36,
+                },
               },
             }}
           >
