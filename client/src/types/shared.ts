@@ -1,5 +1,5 @@
 export interface IEmployeeSummary {
-  id: string;
+  id: number;
   full_name: string;
   current_team: string;
   mobile_number: string;
@@ -23,3 +23,8 @@ export interface IEmployeeData {
   is_billable: boolean;
   billable_hrs: string;
 }
+
+export type IBreadCrumbs = {
+  title: string;
+  link: string;
+}[];

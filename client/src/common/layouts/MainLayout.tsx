@@ -66,13 +66,13 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
         />
       </Sider>
       <Layout className='site-layout'>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
+        <Header style={{ padding: 0, background: '#fff' }}>
           {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
             className: 'trigger',
             onClick: () => setCollapsed(!collapsed),
           })}
         </Header>
-        <Content className='px-[22px] py-5'>{children}</Content>
+        <Content style={{ padding: '0 26px' }}>{children}</Content>
       </Layout>
     </Layout>
   );

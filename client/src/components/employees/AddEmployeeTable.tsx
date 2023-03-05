@@ -10,8 +10,11 @@ import {
   DatePicker,
   TimePicker,
   Typography,
+  Row,
+  Col,
+  Space,
+  ConfigProvider,
 } from 'antd';
-import './style.css';
 import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 
@@ -150,157 +153,182 @@ export function AddEmployeeTable() {
 
   const { token } = useToken();
   return (
-    <div className='rounded-primary bg-white px-[60px] py-[30px]'>
-      <Form
-        name='basic'
-        initialValues={{ remember: true }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete='off'
-        layout='vertical'
-      >
-        <div className='add-employee-form'>
-          <div className='add-employee-form__left'>
-            <div className='bg-[#C3C1BF] h-[120px] w-[120px] rounded-full flex  items-center justify-center'></div>
-          </div>
-          <div className='add-employee-form__right flex flex-col gap-[10px] items-start self-center'>
-            <h2>Profile image</h2>
-            <Button style={{ backgroundColor: token.colorSuccess }}>Upload Profile Image</Button>
-          </div>
-        </div>
-
-        <AddEmployeeFormSectionWrapper title='Basic Information'>
-          {basicInformation.map((item) => {
-            if (item.name === 'gender') {
-              return (
-                <Form.Item
-                  label={item.label}
-                  name={item.name}
-                  key={item.name}
-                  className='w-[398px]'
-                  rules={[{ required: true, message: 'required' }]}
-                >
-                  <Select
-                    placeholder={item.placeholder}
-                    options={item.options}
-                    className='w-full'
-                  />
-                </Form.Item>
-              );
-            }
-            if (item.name === 'dob') {
-              return (
-                <Form.Item
-                  label={item.label}
-                  name={item.name}
-                  key={item.name}
-                  rules={[{ required: true, message: 'required' }]}
-                >
-                  <DatePicker
-                    placeholder={item.placeholder}
-                    className='w-[398px]'
-                    format={'DD/MM/YYYY'}
-                  />
-                </Form.Item>
-              );
-            }
-            return (
-              <Form.Item
-                label={item.label}
-                name={item.name}
-                key={item.name}
-                rules={[{ required: true, message: 'required' }]}
+    // <div className='rounded-primary bg-white px-[60px] py-[30px]'>
+    <Row style={{ background: 'white', padding: '30px 60px', borderRadius: '5px' }}>
+      <Col span={24}>
+        <Form
+          name='basic'
+          initialValues={{ remember: true }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete='off'
+          layout='vertical'
+          wrapperCol={{ span: 24 }}
+        >
+          <Row align={'middle'}>
+            <Col span={4}>
+              <div className='bg-[#C3C1BF] h-[120px] w-[120px] rounded-full flex  items-center justify-center'></div>
+            </Col>
+            <Col span={20}>
+              <Typography.Title level={3} style={{ fontWeight: 800 }}>
+                Profile image
+              </Typography.Title>
+              <ConfigProvider
+                theme={{
+                  token: { colorPrimary: token.colorSuccess },
+                }}
               >
-                <Input placeholder={item.placeholder} className='w-[398px]' />
-              </Form.Item>
-            );
-          })}
-        </AddEmployeeFormSectionWrapper>
-        <Divider />
+                <Button type='primary'>Upload Profile Image</Button>
+              </ConfigProvider>
+            </Col>
+          </Row>
+          <Divider> </Divider>
 
-        <AddEmployeeFormSectionWrapper title='Working Hours'>
-          {workingHours.map((item) => (
-            <Form.Item
-              label={item.label}
-              name={item.name}
-              key={item.name}
-              rules={[{ required: true, message: 'required' }]}
+          <AddEmployeeFormSectionWrapper title='Basic Information'>
+            {basicInformation.map((item) => {
+              if (item.name === 'gender') {
+                return (
+                  <Col key={item.name} span={8}>
+                    <Form.Item
+                      label={item.label}
+                      name={item.name}
+                      rules={[{ required: true, message: 'required' }]}
+                    >
+                      <Select placeholder={item.placeholder} options={item.options} />
+                    </Form.Item>
+                  </Col>
+                );
+              }
+              if (item.name === 'dob') {
+                return (
+                  <Col key={item.name} span={8}>
+                    <Form.Item
+                      label={item.label}
+                      name={item.name}
+                      rules={[{ required: true, message: 'required' }]}
+                    >
+                      <DatePicker
+                        placeholder={item.placeholder}
+                        format={'DD/MM/YYYY'}
+                        style={{ width: '100%' }}
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+              }
+              return (
+                <Col key={item.name} span={8}>
+                  <Form.Item
+                    label={item.label}
+                    name={item.name}
+                    rules={[{ required: true, message: 'required' }]}
+                  >
+                    <Input placeholder={item.placeholder} />
+                  </Form.Item>
+                </Col>
+              );
+            })}
+          </AddEmployeeFormSectionWrapper>
+          <Divider />
+
+          <AddEmployeeFormSectionWrapper title='Working Hours'>
+            {workingHours.map((item) => (
+              <Col key={item.name} span={8}>
+                <Form.Item
+                  label={item.label}
+                  name={item.name}
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <TimePicker
+                    placeholder={item.placeholder}
+                    format={'HH:mm'}
+                    style={{ width: '100%' }}
+                  />
+                </Form.Item>
+              </Col>
+            ))}
+          </AddEmployeeFormSectionWrapper>
+
+          <Divider />
+          <AddEmployeeFormSectionWrapper title='Jobs'>
+            {jobs.map((item) => {
+              if (item.name === 'team') {
+                return (
+                  <Col key={item.name} span={8}>
+                    <Form.Item
+                      label={item.label}
+                      name={item.name}
+                      //
+                      rules={[{ required: true, message: 'required' }]}
+                    >
+                      <Select
+                        placeholder={item.placeholder}
+                        options={item.options}
+                        //
+                      />
+                    </Form.Item>
+                  </Col>
+                );
+              }
+              return (
+                <Col key={item.name} span={8}>
+                  <Form.Item
+                    label={item.label}
+                    name={item.name}
+                    rules={[{ required: true, message: 'required' }]}
+                  >
+                    <Input placeholder={item.placeholder} />
+                  </Form.Item>
+                </Col>
+              );
+            })}
+          </AddEmployeeFormSectionWrapper>
+
+          <Divider />
+          <AddEmployeeFormSectionWrapper title='Billable Information'>
+            {billableInformation.map((item) => {
+              if (item.name === 'is_billable') {
+                return (
+                  <Col key={item.name} span={8}>
+                    <Form.Item name={item.name}>
+                      <ConfigProvider
+                        theme={{
+                          token: { colorPrimary: '#000' },
+                        }}
+                      >
+                        <Checkbox>{item.label}</Checkbox>
+                      </ConfigProvider>
+                    </Form.Item>
+                  </Col>
+                );
+              }
+              return (
+                <Col key={item.name} span={8}>
+                  <Form.Item
+                    label={item.label}
+                    name={item.name}
+                    rules={[{ required: true, message: 'required' }]}
+                  >
+                    <TimePicker placeholder={item.placeholder} style={{ width: '100%' }} />
+                  </Form.Item>
+                </Col>
+              );
+            })}
+          </AddEmployeeFormSectionWrapper>
+
+          <Form.Item>
+            <ConfigProvider
+              theme={{
+                token: { colorPrimary: token.colorWarning },
+              }}
             >
-              <TimePicker placeholder={item.placeholder} format={'HH:mm'} className='w-[398px]' />
-            </Form.Item>
-          ))}
-        </AddEmployeeFormSectionWrapper>
-
-        <Divider />
-        <AddEmployeeFormSectionWrapper title='Jobs'>
-          {jobs.map((item) => {
-            if (item.name === 'team') {
-              return (
-                <Form.Item
-                  label={item.label}
-                  name={item.name}
-                  key={item.name}
-                  className='w-[398px]'
-                  rules={[{ required: true, message: 'required' }]}
-                >
-                  <Select
-                    placeholder={item.placeholder}
-                    options={item.options}
-                    className='w-full'
-                  />
-                </Form.Item>
-              );
-            }
-            return (
-              <Form.Item
-                label={item.label}
-                name={item.name}
-                key={item.name}
-                rules={[{ required: true, message: 'required' }]}
-              >
-                <Input placeholder={item.placeholder} className='w-[398px]' />
-              </Form.Item>
-            );
-          })}
-        </AddEmployeeFormSectionWrapper>
-
-        <Divider />
-        <AddEmployeeFormSectionWrapper title='Billable Information'>
-          {billableInformation.map((item) => {
-            if (item.name === 'is_billable') {
-              return (
-                <Form.Item name={item.name} key={item.name} className='w-full'>
-                  <Checkbox>{item.label}</Checkbox>
-                </Form.Item>
-              );
-            }
-            return (
-              <Form.Item
-                label={item.label}
-                name={item.name}
-                key={item.name}
-                className='w-full'
-                rules={[{ required: true, message: 'required' }]}
-              >
-                <TimePicker placeholder={item.placeholder} className='w-[398px]' />
-              </Form.Item>
-            );
-          })}
-        </AddEmployeeFormSectionWrapper>
-
-        <Form.Item>
-          <Button
-            type='primary'
-            htmlType='submit'
-            style={{
-              backgroundColor: token.colorWarning,
-              width: '146px',
-            }}
-          >
-            Save
-          </Button>
-        </Form.Item>
-      </Form>
-    </div>
+              <Button type='primary' htmlType='submit' size='middle'>
+                Save
+              </Button>
+            </ConfigProvider>
+          </Form.Item>
+        </Form>
+      </Col>
+    </Row>
   );
 }

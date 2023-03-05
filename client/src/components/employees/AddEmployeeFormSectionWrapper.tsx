@@ -1,6 +1,5 @@
-import { Typography } from 'antd';
+import { Col, Row, Typography } from 'antd';
 import React from 'react';
-import './style.css';
 export function AddEmployeeFormSectionWrapper({
   title,
   children,
@@ -9,16 +8,15 @@ export function AddEmployeeFormSectionWrapper({
   children: React.ReactNode;
 }) {
   return (
-    <div className='add-employee-form mt-[50px]'>
-      <div className='add-employee-form__left '>
-        <Typography.Title className='self-start' level={3}>
+    <Row>
+      <Col span={4}>
+        <Typography.Title className='self-start' level={3} style={{ fontWeight: 800 }}>
           {title}
         </Typography.Title>
-      </div>
-
-      <div className='add-employee-form__right flex flex-row gap-x-[30px] flex-wrap '>
-        {children}
-      </div>
-    </div>
+      </Col>
+      <Col span={20}>
+        <Row gutter={16}>{children}</Row>
+      </Col>
+    </Row>
   );
 }

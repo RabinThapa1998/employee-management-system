@@ -53,18 +53,6 @@ const columns: ColumnsType<IEmployeeSummary> = [
   },
 ];
 
-const data: IEmployeeSummary[] = [
-  {
-    id: '1',
-    full_name: 'David Doe',
-    current_team: 'Fabrication Team 1',
-    mobile_number: '+61 8386 3482',
-    email_address: 'david33@gmail.com',
-    designation: 'Electrical',
-    billable_hours: '40 hours/week',
-  },
-];
-
 export function EmployeesTable() {
   const employeeList = useAppSelector(employeeSelector);
   console.log('🚀 ~ file: EmployeesTable.tsx:70 ~ EmployeesTable ~ employeeList:', employeeList);

@@ -1,8 +1,31 @@
+import { Typography } from 'antd';
+import { BreadCrumbComponent } from '~/common';
 import { AddEmployeeTable } from '~/components';
+import { IBreadCrumbs } from '~/types';
 
 export function AddEmployee() {
+  const crumbs: IBreadCrumbs = [
+    {
+      title: 'Manage Users',
+      link: '/',
+    },
+    {
+      title: 'Employee',
+      link: '/employee',
+    },
+    {
+      title: 'Add Employee',
+      link: '/add-employee',
+    },
+  ];
   return (
     <div>
+      <div style={{ margin: '10px 0' }}>
+        <BreadCrumbComponent crumbs={crumbs} />
+        <Typography.Title level={1} style={{ fontWeight: 800 }}>
+          Add Employee
+        </Typography.Title>
+      </div>
       <AddEmployeeTable />
     </div>
   );
