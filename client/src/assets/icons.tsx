@@ -92,4 +92,46 @@ export const Icons = {
       </g>
     </svg>
   ),
+  Print: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+      <g id='Group_19545' data-name='Group 19545' transform='translate(0 0)'>
+        <rect
+          id='Rectangle_161'
+          data-name='Rectangle 161'
+          width='24'
+          height='24'
+          transform='translate(0 0)'
+          fill='none'
+        />
+        <path
+          id='Icon_material-local-printshop'
+          data-name='Icon material-local-printshop'
+          d='M17.56,8.782H5.569A2.566,2.566,0,0,0,3,11.352V16.49H6.426v3.426H16.7V16.49h3.426V11.352A2.566,2.566,0,0,0,17.56,8.782ZM14.99,18.2H8.139V13.921H14.99Zm2.569-6a.856.856,0,1,1,.856-.856A.859.859,0,0,1,17.56,12.208ZM16.7,4.5H6.426V7.926H16.7Z'
+          transform='translate(0.519 0.051)'
+          fill='#1e83f7'
+        />
+      </g>
+    </svg>
+  ),
+  Download: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+      <g id='Group_19548' data-name='Group 19548' transform='translate(0 0)'>
+        <rect
+          id='Rectangle_161'
+          data-name='Rectangle 161'
+          width='24'
+          height='24'
+          transform='translate(0 0)'
+          fill='none'
+        />
+        <path
+          id='Icon_ionic-md-download'
+          data-name='Icon ionic-md-download'
+          d='M20.639,10.381H16.672V4.5H10.717v5.881H6.75l6.944,6.862ZM6.75,19.2v1.962H20.639V19.2Z'
+          transform='translate(-1.389 -1.199)'
+          fill='#20bc08'
+        />
+      </g>
+    </svg>
+  ),
 };

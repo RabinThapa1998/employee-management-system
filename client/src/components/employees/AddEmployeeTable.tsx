@@ -15,7 +15,7 @@ import {
   Space,
   ConfigProvider,
 } from 'antd';
-import { AddEmployeeFormSectionWrapper } from './AddEmployeeFormSectionWrapper';
+import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
 import { CloudUploadOutlined } from '@ant-design/icons';
@@ -167,7 +167,7 @@ export function AddEmployeeTable() {
           layout='vertical'
           wrapperCol={{ span: 24 }}
         >
-          <Row align={'middle'}>
+          <Row align={'middle'} style={{ margin: '0 0 50px 0' }}>
             <Col span={4}>
               <Icons.Profile />
             </Col>
@@ -186,9 +186,8 @@ export function AddEmployeeTable() {
               </ConfigProvider>
             </Col>
           </Row>
-          <Divider> </Divider>
 
-          <AddEmployeeFormSectionWrapper title='Basic Information'>
+          <TableSectionWrapper title='Basic Information'>
             {basicInformation.map((item) => {
               if (item.name === 'gender') {
                 return (
@@ -232,10 +231,9 @@ export function AddEmployeeTable() {
                 </Col>
               );
             })}
-          </AddEmployeeFormSectionWrapper>
-          <Divider />
+          </TableSectionWrapper>
 
-          <AddEmployeeFormSectionWrapper title='Working Hours'>
+          <TableSectionWrapper title='Working Hours'>
             {workingHours.map((item) => (
               <Col key={item.name} span={8}>
                 <Form.Item
@@ -251,10 +249,9 @@ export function AddEmployeeTable() {
                 </Form.Item>
               </Col>
             ))}
-          </AddEmployeeFormSectionWrapper>
+          </TableSectionWrapper>
 
-          <Divider />
-          <AddEmployeeFormSectionWrapper title='Jobs'>
+          <TableSectionWrapper title='Jobs'>
             {jobs.map((item) => {
               if (item.name === 'team') {
                 return (
@@ -286,10 +283,9 @@ export function AddEmployeeTable() {
                 </Col>
               );
             })}
-          </AddEmployeeFormSectionWrapper>
+          </TableSectionWrapper>
 
-          <Divider />
-          <AddEmployeeFormSectionWrapper title='Billable Information'>
+          <TableSectionWrapper title='Billable Information'>
             {billableInformation.map((item) => {
               if (item.name === 'is_billable') {
                 return (
@@ -318,7 +314,7 @@ export function AddEmployeeTable() {
                 </Col>
               );
             })}
-          </AddEmployeeFormSectionWrapper>
+          </TableSectionWrapper>
 
           <Form.Item>
             <ConfigProvider

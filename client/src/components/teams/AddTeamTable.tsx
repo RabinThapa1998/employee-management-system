@@ -15,11 +15,11 @@ import {
   Space,
   ConfigProvider,
 } from 'antd';
-import { AddEmployeeFormSectionWrapper } from '../employees/AddEmployeeFormSectionWrapper';
+import { TableSectionWrapper } from '../employees/TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
-import { CloudUploadOutlined } from '@ant-design/icons';
-
+import { CloudUploadOutlined, DownloadOutlined, PrinterFilled } from '@ant-design/icons';
+import QRCode from 'react-qr-code';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -71,7 +71,7 @@ export function AddTeamTable() {
           layout='vertical'
           wrapperCol={{ span: 24 }}
         >
-          <AddEmployeeFormSectionWrapper title='Basic Information'>
+          <TableSectionWrapper title='Basic Information'>
             {basicInformation.map((item) => (
               <Col key={item.name} span={8}>
                 <Form.Item
@@ -83,8 +83,70 @@ export function AddTeamTable() {
                 </Form.Item>
               </Col>
             ))}
-          </AddEmployeeFormSectionWrapper>
-          <Divider />
+          </TableSectionWrapper>
+
+          <TableSectionWrapper title='Members'>
+            <Col span={10}>
+              <Form.Item
+                label={'Team Members'}
+                name={'team_members'}
+                rules={[{ required: true, message: 'required' }]}
+              >
+                <Select
+                  placeholder={'Select Employees'}
+                  options={[
+                    {
+                      value: '1',
+                      label: '1',
+                    },
+                  ]}
+                />
+              </Form.Item>
+            </Col>
+
+            <Col span={24}>
+              <Row>
+                <Col span={8}>
+                  <Form.Item
+                    label={'Billable Hours'}
+                    name={'billable_hours'}
+                    rules={[{ required: true, message: 'required' }]}
+                  >
+                    <Input placeholder={'Enter Billable Hours'} />
+                  </Form.Item>
+                </Col>
+              </Row>
+            </Col>
+          </TableSectionWrapper>
+          <TableSectionWrapper title='Team QR' align={'middle'} gutter={16} withDivider={false}>
+            <Col span={4}>
+              <QRCode value='hey' />
+            </Col>
+            <Col span={4}>
+              <ConfigProvider
+                theme={{
+                  token: { colorBorder: token.colorPrimary, colorText: token.colorPrimary },
+                }}
+              >
+                <Button icon={<PrinterFilled />} style={{ width: '135px' }}>
+                  Print
+                </Button>
+              </ConfigProvider>
+              <div style={{ height: '15px' }}></div>
+              <ConfigProvider
+                theme={{
+                  token: {
+                    colorBorder: token.colorSuccess,
+                    colorText: token.colorSuccess,
+                  },
+                }}
+              >
+                <Button icon={<DownloadOutlined />} style={{ width: '135px' }}>
+                  Download
+                </Button>
+              </ConfigProvider>
+            </Col>
+          </TableSectionWrapper>
 
           <Form.Item>
             <ConfigProvider
