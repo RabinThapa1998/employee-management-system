@@ -5,6 +5,7 @@ import { ConfigProvider } from 'antd';
 import { Provider } from 'react-redux';
 import { store, persistor } from '~/global-states';
 import { PersistGate } from 'redux-persist/integration/react';
+import { AddTeam } from './page/AddTeam';
 function App() {
   const router = createBrowserRouter([
     {
@@ -28,6 +29,14 @@ function App() {
       element: (
         <MainLayout>
           <AddEmployee />
+        </MainLayout>
+      ),
+    },
+    {
+      path: '/add-team',
+      element: (
+        <MainLayout>
+          <AddTeam />
         </MainLayout>
       ),
     },
