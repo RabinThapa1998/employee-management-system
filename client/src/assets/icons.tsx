@@ -61,4 +61,35 @@ export const Icons = {
       </g>
     </svg>
   ),
+  Profile: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'>
+      <g id='Group_19553' data-name='Group 19553' transform='translate(-323 -166)'>
+        <circle
+          id='Ellipse_340'
+          data-name='Ellipse 340'
+          cx='60'
+          cy='60'
+          r='60'
+          transform='translate(323 166)'
+          fill='#f1f1f1'
+        />
+        <g id='filter' transform='translate(-669 109)'>
+          <path
+            id='Path_19785'
+            data-name='Path 19785'
+            d='M0,0H72V72H0Z'
+            transform='translate(1016 81)'
+            fill='none'
+          />
+          <path
+            id='Icon_ionic-md-person'
+            data-name='Icon ionic-md-person'
+            d='M34.546,34.546A15.023,15.023,0,1,0,19.523,19.523,15.067,15.067,0,0,0,34.546,34.546Zm0,7.511C24.593,42.057,4.5,47.128,4.5,57.08v7.511H64.591V57.08C64.591,47.128,44.5,42.057,34.546,42.057Z'
+            transform='translate(1017.495 82.495)'
+            fill='#c3c1bf'
+          />
+        </g>
+      </g>
+    </svg>
+  ),
 };

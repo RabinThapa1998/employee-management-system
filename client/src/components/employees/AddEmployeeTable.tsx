@@ -169,7 +169,7 @@ export function AddEmployeeTable() {
         >
           <Row align={'middle'}>
             <Col span={4}>
-              <div className='bg-[#C3C1BF] h-[120px] w-[120px] rounded-full flex  items-center justify-center'></div>
+              <Icons.Profile />
             </Col>
             <Col span={20}>
               <Typography.Title level={3} style={{ fontWeight: 800 }}>
