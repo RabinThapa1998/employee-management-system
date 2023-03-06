@@ -46,7 +46,7 @@ export const createEmployeeHandler = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     throw new BadRequestError(
-      error.message || "Something went wrong | fix backed"
+      error.message || "Something went wrong. Debug backend!"
     );
   }
 };

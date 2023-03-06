@@ -21,7 +21,7 @@ export const createTeamHandler = async (req: Request, res: Response) => {
     });
   } catch (error: any) {
     throw new BadRequestError(
-      error.message || "Something went wrong fixed backed"
+      error.message || "Something went wrong. Debug backend!"
     );
   }
 };

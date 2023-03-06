@@ -1,14 +1,15 @@
 import { BadRequestError } from "../../../../common/errors/bad-request-error";
 import { Request, Response } from "express";
-import { Team } from "../../../../models";
+import { Employee } from "../../../../models";
 
-export const getTeamHandler = async (req: Request, res: Response) => {
+export const getOneEmployeeHandler = async (req: Request, res: Response) => {
   try {
-    const team = await Team.find();
-    if (!team) throw new BadRequestError("Team List Empty");
+    const { id } = req.params;
+    const employee = await Employee.findById(id);
+    if (!employee) throw new BadRequestError("Employee not found");
 
     res.status(200).json({
-      data: team,
+      data: employee,
     });
   } catch (error: any) {
     throw new BadRequestError(
