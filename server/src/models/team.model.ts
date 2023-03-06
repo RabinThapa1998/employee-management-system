@@ -7,11 +7,6 @@ import mongoose, {
   ObjectId,
 } from "mongoose";
 
-enum Gender {
-  Male = "Male",
-  Female = "Female",
-  Other = "Other",
-}
 export interface TeamAttrs {
   name: string;
   password: string;
