@@ -25,7 +25,7 @@ export interface EmployeeAttrs {
   starts_at: string;
   ends_at: string;
   job_position: string;
-  team: "available" | ObjectId[];
+  team: ObjectId[];
   is_billable: boolean;
   billable_hrs: Number;
 }
@@ -42,7 +42,7 @@ export interface EmployeeDoc extends Document, EmployeeAttrs {
   starts_at: string;
   ends_at: string;
   job_position: string;
-  team: "available" | ObjectId[];
+  team: ObjectId[];
   is_billable: boolean;
   billable_hrs: Number;
 
@@ -104,9 +104,9 @@ const EmployeeSchema = new Schema<EmployeeDoc>(
       required: true,
     },
     team: {
-      type: [Schema.Types.ObjectId] || String,
+      type: [Schema.Types.ObjectId],
       ref: Team,
-      default: "available",
+      default: [],
       required: false,
     },
     is_billable: {

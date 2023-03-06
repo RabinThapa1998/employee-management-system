@@ -1,6 +1,6 @@
 import { BadRequestError } from "../../../../common/errors/bad-request-error";
 import { Request, Response } from "express";
-import { Team } from "../../../../models";
+import { Employee, Team } from "../../../../models";
 
 export const createTeamHandler = async (req: Request, res: Response) => {
   try {
@@ -9,6 +9,10 @@ export const createTeamHandler = async (req: Request, res: Response) => {
       name,
     });
     if (_team) throw new BadRequestError("Team Already Exists");
+    const _employee = await Employee.find({
+      _id: { $in: members },
+    });
+
     const newTeam = await Team.build({
       name,
       password,
@@ -19,6 +23,10 @@ export const createTeamHandler = async (req: Request, res: Response) => {
     res.status(200).json({
       data: newTeam,
     });
+    const updateEmployee = await Employee.updateMany(
+      { _id: { $in: members } },
+      { $set: { team: newTeam._id } }
+    );
   } catch (error: any) {
     throw new BadRequestError(
       error.message || "Something went wrong. Debug backend!"
