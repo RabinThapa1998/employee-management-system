@@ -80,6 +80,7 @@ function App() {
                 },
                 Button: {
                   controlHeight: 36,
+                  borderRadius: 5,
                 },
               },
             }}
