@@ -84,6 +84,10 @@ function App() {
                   controlHeight: 36,
                   borderRadius: 5,
                 },
+                Form: {
+                  fontSize: 15,
+                  fontWeightStrong: 600,
+                },
               },
             }}
           >

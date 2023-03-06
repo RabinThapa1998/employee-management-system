@@ -11,25 +11,6 @@ import { Icons } from '~/assets';
 import { Link } from 'react-router-dom';
 
 const { Header, Sider, Content } = Layout;
-function OverviewCard() {
-  return (
-    <div
-      className='h-[88px] w-[304px] bg-brand-primary rounded-primary
-     px-5 flex flex-row items-center justify-between'
-    >
-      <div className='flex flex-col text-white'>
-        <p>Teams</p>
-        <p>23</p>
-      </div>
-      <div
-        className='h-[42px] w-[42px] flex flex-row items-center justify-center rounded-primary
-       bg-[#FFFFFF33]'
-      >
-        {<Icons.Teams />}
-      </div>
-    </div>
-  );
-}
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
