@@ -14,11 +14,17 @@ export function TableSectionWrapper({
   ...rest
 }: ITableSectionWrapper) {
   return (
-    <Row>
+    <Row gutter={80}>
       <Col span={4}>
-        <Typography.Title className='self-start' level={3} style={{ fontWeight: 800 }}>
-          {title}
-        </Typography.Title>
+        <Row justify={'end'}>
+          <Typography.Title
+            className='self-start'
+            level={3}
+            style={{ fontWeight: 800, textAlign: 'end' }}
+          >
+            {title}
+          </Typography.Title>
+        </Row>
       </Col>
       <Col span={20}>
         <Row gutter={16} {...rest}>
