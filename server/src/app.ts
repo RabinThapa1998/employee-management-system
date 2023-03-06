@@ -1,10 +1,10 @@
 import bodyParser from "body-parser";
-import express, { Request, Response } from "express";
+import express from "express";
 import "express-async-errors";
 import { NotFoundError } from "./common/errors/not-found-error";
 import { errorHandler } from "./common/middlewares/error-handler";
 import cors from "cors";
-import config from "./config";
+import { indexDashboardRouter } from "./routes/v1/dashboard";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -13,9 +13,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use(express.json());
-app.use("/api/v1/dashboard", (req, res) =>
-  res.json({ message: "Hello World" })
-);
+app.use("/api/v1/dashboard", indexDashboardRouter);
 app.all("/", async (req, res) => {
   res.status(200).send("ALL END POINT!");
 });

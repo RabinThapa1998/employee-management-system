@@ -39,13 +39,13 @@ interface IForm {
 
 const basicInformation: IForm[] = [
   {
-    name: 'team_name',
+    name: 'name',
     label: 'Team Name',
     placeholder: 'Enter Team Name',
     type: 'text',
   },
   {
-    name: 'team_password',
+    name: 'password',
     label: 'Team Password',
     placeholder: 'Enter Team Password',
     type: 'text',

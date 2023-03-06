@@ -63,7 +63,8 @@ const EmployeeSchema = new Schema<EmployeeDoc>(
     },
     middle_name: {
       type: String,
-      required: true,
+      required: false,
+      default: "",
     },
     surname: {
       type: String,
