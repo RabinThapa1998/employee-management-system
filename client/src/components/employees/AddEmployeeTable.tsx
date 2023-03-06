@@ -18,8 +18,7 @@ import {
 import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
-import { CloudUploadOutlined } from '@ant-design/icons';
-
+import { BillableHourField } from '~/common';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -167,9 +166,11 @@ export function AddEmployeeTable() {
           layout='vertical'
           wrapperCol={{ span: 24 }}
         >
-          <Row align={'middle'} style={{ margin: '0 0 50px 0' }}>
+          <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
             <Col span={4}>
-              <Icons.Profile />
+              <Row justify={'end'}>
+                <Icons.Profile />
+              </Row>
             </Col>
             <Col span={20}>
               <Typography.Title level={3} style={{ fontWeight: 800 }}>
@@ -309,7 +310,11 @@ export function AddEmployeeTable() {
                     name={item.name}
                     rules={[{ required: true, message: 'required' }]}
                   >
-                    <TimePicker placeholder={item.placeholder} style={{ width: '100%' }} />
+                    <BillableHourField
+                      placeholder={item.placeholder}
+                      bgColor={token.colorBorder}
+                      color={token.colorText}
+                    />
                   </Form.Item>
                 </Col>
               );

@@ -20,6 +20,8 @@ import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
 import { CloudUploadOutlined, DownloadOutlined, PrinterFilled } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
+import { BillableHourField } from '~/common';
+
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -112,7 +114,11 @@ export function AddTeamTable() {
                     name={'billable_hours'}
                     rules={[{ required: true, message: 'required' }]}
                   >
-                    <Input placeholder={'Enter Billable Hours'} />
+                    <BillableHourField
+                      placeholder={'Enter Billable Hours'}
+                      bgColor={token.colorPrimary}
+                      color={token.colorWhite}
+                    />
                   </Form.Item>
                 </Col>
               </Row>
