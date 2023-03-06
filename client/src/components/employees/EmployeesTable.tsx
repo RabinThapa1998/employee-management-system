@@ -8,41 +8,57 @@ const columns: ColumnsType<IEmployeeSummary> = [
     title: 'ID',
     dataIndex: 'id',
     key: 'id',
+    colSpan: 1,
+    width: 100,
   },
   {
     title: 'Full Name',
     dataIndex: 'full_name',
     key: 'full_name',
+    colSpan: 1,
+    width: 150,
   },
   {
     title: 'Current Team',
     dataIndex: 'current_team',
     key: 'current_team',
+    colSpan: 1,
+    width: 150,
   },
   {
     title: 'Mobile Number',
     dataIndex: 'mobile_number',
     key: 'mobile_number',
+    colSpan: 1,
+    width: 150,
   },
   {
     title: 'Email Address',
     dataIndex: 'email_address',
     key: 'email_address',
+    colSpan: 1,
+    width: 200,
   },
   {
     title: 'Designation',
     dataIndex: 'designation',
     key: 'designation',
+    colSpan: 1,
+    width: 100,
   },
   {
     title: 'Billable Hours',
     dataIndex: 'billable_hours',
     key: 'billable_hours',
+    colSpan: 1,
+    width: 150,
   },
 
   {
     title: 'Action',
     key: 'action',
+    colSpan: 1,
+    width: 150,
     render: (_, record) => (
       <Space size='middle'>
         <p>view</p>
@@ -71,5 +87,12 @@ export function EmployeesTable() {
     });
     return temp;
   }, [employeeList]);
-  return <Table columns={columns} dataSource={employeeFormattedData} />;
+  return (
+    <Table
+      columns={columns}
+      dataSource={employeeFormattedData}
+      pagination={{ position: ['bottomRight'] }}
+      className='table'
+    />
+  );
 }
