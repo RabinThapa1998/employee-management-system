@@ -134,4 +134,64 @@ export const Icons = {
       </g>
     </svg>
   ),
+  Visibility: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+      <g id='Group_19334' data-name='Group 19334' transform='translate(0 0)'>
+        <path
+          id='Path_19789'
+          data-name='Path 19789'
+          d='M0,0H24V24H0Z'
+          transform='translate(0 0)'
+          fill='none'
+        />
+        <path
+          id='Icon_awesome-eye'
+          data-name='Icon awesome-eye'
+          d='M17.379,9.885A9.736,9.736,0,0,0,8.742,4.5,9.738,9.738,0,0,0,.106,9.885a.982.982,0,0,0,0,.886,9.736,9.736,0,0,0,8.637,5.385,9.738,9.738,0,0,0,8.637-5.385A.982.982,0,0,0,17.379,9.885ZM8.742,14.7a4.371,4.371,0,1,1,4.371-4.371A4.371,4.371,0,0,1,8.742,14.7Zm0-7.285a2.893,2.893,0,0,0-.768.115A1.453,1.453,0,0,1,5.943,9.56a2.907,2.907,0,1,0,2.8-2.146Z'
+          transform='translate(3.074 1.671)'
+          fill='#20bc08'
+        />
+      </g>
+    </svg>
+  ),
+  Edit: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+      <g id='Group_19334' data-name='Group 19334' transform='translate(0 0)'>
+        <path
+          id='Path_19789'
+          data-name='Path 19789'
+          d='M0,0H24V24H0Z'
+          transform='translate(0 0)'
+          fill='none'
+        />
+        <path
+          id='Icon_material-edit'
+          data-name='Icon material-edit'
+          d='M4.5,17.693v3.472H7.972L18.213,10.924,14.741,7.452ZM20.9,8.239a.922.922,0,0,0,0-1.306L18.731,4.767a.922.922,0,0,0-1.306,0L15.731,6.461,19.2,9.934,20.9,8.239Z'
+          transform='translate(-0.336 -0.326)'
+          fill='#1e83f7'
+        />
+      </g>
+    </svg>
+  ),
+  Delete: () => (
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'>
+      <g id='Group_19334' data-name='Group 19334' transform='translate(0 0)'>
+        <path
+          id='Path_19789'
+          data-name='Path 19789'
+          d='M0,0H24V24H0Z'
+          transform='translate(0 0)'
+          fill='none'
+        />
+        <path
+          id='Icon_material-delete'
+          data-name='Icon material-delete'
+          d='M8.481,20.2a1.969,1.969,0,0,0,1.963,1.963H18.3A1.969,1.969,0,0,0,20.259,20.2V8.426H8.481ZM21.241,5.481H17.806L16.824,4.5H11.917l-.981.981H7.5V7.444H21.241Z'
+          transform='translate(-1.871 -1.327)'
+          fill='#f71e1e'
+        />
+      </g>
+    </svg>
+  ),
 };

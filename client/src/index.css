@@ -28,9 +28,9 @@
 }
 
 .ant-table-wrapper {
-  width: 100%;
+  width: 100% !important;
 }
-.ant-table-thead > tr > th {
+.table .ant-table-thead > tr > th {
   background: #fff !important;
   padding: 0 !important;
   font-size: 18px !important;
@@ -39,7 +39,52 @@
   color: #656669 !important;
 }
 
-.ant-table-tbody > tr > td {
+.table .ant-table-tbody > tr > td {
   padding: 14px 0 !important;
   background: #fff !important;
+}
+
+.visibility {
+  width: 32px;
+  height: 32px;
+  background: #20bc081a 0% 0% no-repeat padding-box;
+  border: 1px solid #20bc081a;
+  border-radius: 5px;
+  opacity: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+.visibility:hover {
+  background: #20bc080f 0% 0% no-repeat padding-box;
+}
+.edit {
+  width: 32px;
+  height: 32px;
+  background: #1e83f71a 0% 0% no-repeat padding-box;
+  border: 1px solid #1e83f733;
+  border-radius: 5px;
+  opacity: 1;
+  display: grid;
+  cursor: pointer;
+  place-items: center;
+}
+.edit:hover {
+  background: #1e83f70f 0% 0% no-repeat padding-box;
+}
+
+.delete {
+  width: 32px;
+  height: 32px;
+  background: #f71e1e1a 0% 0% no-repeat padding-box;
+  border: 1px solid #f71e1e1a;
+  border-radius: 5px;
+  opacity: 1;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+.delete:hover {
+  background: #f71e1e0f 0% 0% no-repeat padding-box;
 }
