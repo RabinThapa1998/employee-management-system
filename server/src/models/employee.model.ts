@@ -6,7 +6,6 @@ import mongoose, {
   model,
   ObjectId,
 } from "mongoose";
-import { Team } from "./team.model";
 
 enum Gender {
   Male = "Male",
@@ -105,7 +104,7 @@ const EmployeeSchema = new Schema<EmployeeDoc>(
     },
     team: {
       type: [Schema.Types.ObjectId],
-      ref: Team,
+      ref: "Team",
       default: [],
       required: false,
     },

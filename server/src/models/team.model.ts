@@ -41,6 +41,7 @@ const TeamSchema = new Schema<TeamDoc>(
     },
     members: {
       type: [Schema.Types.ObjectId],
+      ref: "Employee",
       required: true,
     },
     billable_hrs: {

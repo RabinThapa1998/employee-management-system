@@ -9,9 +9,24 @@ export const createTeamHandler = async (req: Request, res: Response) => {
       name,
     });
     if (_team) throw new BadRequestError("Team Already Exists");
+    //check if employee exists
     const _employee = await Employee.find({
       _id: { $in: members },
     });
+    console.log(
+      "🚀 ~ file: create.ts:15 ~ createTeamHandler ~ _employee:",
+      _employee
+    );
+    if (_employee.length !== members.length)
+      throw new BadRequestError("Employee Not Found");
+
+    //check if employee already in a team
+    const _employeeInTeam = await Employee.find({
+      _id: { $in: members },
+      team: { $ne: null },
+    });
+    if (_employeeInTeam.length > 0)
+      throw new BadRequestError("Employee Already in a Team");
 
     const newTeam = await Team.build({
       name,

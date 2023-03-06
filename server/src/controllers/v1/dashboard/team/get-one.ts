@@ -2,10 +2,11 @@ import { BadRequestError } from "../../../../common/errors/bad-request-error";
 import { Request, Response } from "express";
 import { Team } from "../../../../models";
 
-export const getTeamHandler = async (req: Request, res: Response) => {
+export const getOneTeamHandler = async (req: Request, res: Response) => {
   try {
-    const team = await Team.find().populate("members", "name");
-    if (!team) throw new BadRequestError("Team List Empty");
+    const { id } = req.params;
+    const team = await Team.findById(id).populate("members");
+    if (!team) throw new BadRequestError("Team Not Found");
 
     res.status(200).json({
       data: team,
