@@ -18,6 +18,7 @@ const validateFields = [
     .isEmpty()
     .withMessage("email field is required")
     .isEmail()
+    .normalizeEmail()
     .withMessage("invalid email"),
   check("gender").not().isEmpty().withMessage("gender field is required"),
   check("starts_at").not().isEmpty().withMessage("starts_at field is required"),
