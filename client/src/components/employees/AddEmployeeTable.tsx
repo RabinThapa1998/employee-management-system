@@ -31,7 +31,7 @@ interface IForm {
   label: string;
   placeholder?: string;
   options?: option;
-  type: 'text' | 'number' | 'date' | 'select' | 'checkbox' | 'time';
+  type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
 }
 
 const basicInformation: IForm[] = [
@@ -39,19 +39,19 @@ const basicInformation: IForm[] = [
     name: 'name',
     label: 'Name',
     placeholder: 'Enter name',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'middle_name',
     label: 'Middle Name',
     placeholder: 'Enter middle name',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'surname',
     label: 'Surname',
     placeholder: 'Enter surname',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'dob',
@@ -77,25 +77,25 @@ const basicInformation: IForm[] = [
       },
     ],
     placeholder: 'Choose Gender',
-    type: 'select',
+    type: 'string',
   },
   {
     name: 'address',
     label: 'Address',
     placeholder: 'Enter Address',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'phone_number',
     label: 'Phone Number',
     placeholder: 'Enter Phone Number',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'email',
     label: 'Email Address',
     placeholder: 'Enter Email Address',
-    type: 'text',
+    type: 'email',
   },
 ];
 const workingHours: IForm[] = [
@@ -103,13 +103,13 @@ const workingHours: IForm[] = [
     name: 'starts_at',
     label: 'Starts At',
     placeholder: 'HH-MM',
-    type: 'time',
+    type: 'string',
   },
   {
     name: 'ends_in',
     label: 'Ends In',
     placeholder: 'HH-MM',
-    type: 'time',
+    type: 'string',
   },
 ];
 const jobs: IForm[] = [
@@ -117,7 +117,7 @@ const jobs: IForm[] = [
     name: 'job_position',
     label: 'Job Position',
     placeholder: 'Enter Job Position',
-    type: 'text',
+    type: 'string',
   },
   {
     name: 'team',
@@ -129,7 +129,7 @@ const jobs: IForm[] = [
         label: 'Available',
       },
     ],
-    type: 'select',
+    type: 'string',
   },
 ];
 const billableInformation = [
@@ -225,7 +225,7 @@ export function AddEmployeeTable() {
                   <Form.Item
                     label={item.label}
                     name={item.name}
-                    rules={[{ required: true, message: 'required' }]}
+                    rules={[{ required: true, type: item.type as any }]}
                   >
                     <Input placeholder={item.placeholder} />
                   </Form.Item>
