@@ -54,6 +54,8 @@ function App() {
                 colorSuccess: '#20bc08',
                 colorTextDisabled: '#656669',
                 colorBgContainer: '#F9F9F9',
+                colorBgContainerDisabled: '#F1F1F1',
+                colorBorder: '#C3C1BF',
                 fontFamily: 'Nunito Sans, sans-serif',
               },
               components: {
@@ -68,6 +70,8 @@ function App() {
                   lineHeightHeading3: 1.5,
                   lineHeightHeading4: 1.5,
                   lineHeightHeading5: 1.5,
+                  fontWeightStrong: 800,
+                  margin: 0,
                 },
                 Breadcrumb: {
                   fontSize: 12,

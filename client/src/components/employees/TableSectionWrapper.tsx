@@ -1,5 +1,6 @@
 import { Col, Divider, Row, Typography, RowProps } from 'antd';
 import React from 'react';
+import { DividerComponent } from '~/common';
 
 interface ITableSectionWrapper extends RowProps {
   title: string;
@@ -26,7 +27,7 @@ export function TableSectionWrapper({
         {withDivider && (
           <Row>
             <Col span={24}>
-              <Divider style={{ borderBlockStart: '2px solid #C3C1BF' }} />
+              <DividerComponent />
             </Col>
           </Row>
         )}

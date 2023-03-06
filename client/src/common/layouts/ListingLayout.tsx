@@ -6,35 +6,58 @@ import {
   UserOutlined,
   VideoCameraOutlined,
 } from '@ant-design/icons';
-import { Layout, Menu, theme } from 'antd';
+import { Col, Layout, Menu, Row, theme, Typography } from 'antd';
 import { Icons } from '~/assets';
 import { Link } from 'react-router-dom';
+import { DividerComponent } from '../DividerComponent';
 
 const { Header, Sider, Content } = Layout;
-function OverviewCard() {
+function OverviewCard({
+  color,
+  title,
+  icon,
+  count,
+}: {
+  color: string;
+  title: string;
+  icon: React.ReactNode;
+  count: number;
+}) {
   return (
-    <div
-      className='h-[88px] w-[304px] bg-brand-primary rounded-primary
-     px-5 flex flex-row items-center justify-between'
+    <Row
+      style={{
+        // height: '88px',
+        backgroundColor: color,
+        borderRadius: '5px',
+        padding: '12px 20px',
+      }}
+      align='middle'
+      justify='space-between'
     >
-      <div className='flex flex-col text-white'>
-        <p>Teams</p>
-        <p>23</p>
-      </div>
-      <div
-        className='h-[42px] w-[42px] flex flex-row items-center justify-center rounded-primary
-       bg-[#FFFFFF33]'
-      >
-        {<Icons.Teams />}
-      </div>
-    </div>
+      <Col>
+        <Typography.Paragraph style={{ color: 'white', margin: 0, fontWeight: 600 }}>
+          {title}
+        </Typography.Paragraph>
+        <Typography.Title level={1} style={{ color: 'white', margin: 0 }}>
+          {count}
+        </Typography.Title>
+      </Col>
+      <Col>
+        <div
+          className='h-[42px] w-[42px] flex flex-row items-center justify-center rounded-primary
+        bg-[#FFFFFF33]'
+        >
+          {icon}
+        </div>
+      </Col>
+    </Row>
   );
 }
 
 export function ListingLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer },
+    token: { colorBgContainer, colorPrimary, colorWarning, colorBgContainerDisabled, colorBorder },
   } = theme.useToken();
 
   return (
@@ -72,26 +95,73 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
             onClick: () => setCollapsed(!collapsed),
           })}
         </Header>
-        <Content className='px-[22px] py-5'>
-          <h1>Manage Users</h1>
-          <div className='flex flex-row gap-5'>
-            <OverviewCard />
-            <OverviewCard />
-          </div>
-          <div className='bg-white rounded-primary pt-[15px] mt-5'>
-            <div className='flex flex-row gap-5 h-[58px]'>
-              <Link
-                to={'/'}
-                className='bg-[#F1F1F1] flex flex-row items-center justify-center px-5 rounded-t-primary'
-              >
-                <h3>Teams</h3>
-              </Link>
-              <Link to={'/employees'}>
-                <h3>Employees</h3>
-              </Link>
-            </div>
-            {children}
-          </div>
+        <Content style={{ padding: '20px 22px' }}>
+          <Typography.Title level={1} style={{ fontWeight: 800 }}>
+            Manage Users
+          </Typography.Title>
+          <Row gutter={20}>
+            <Col span={6}>
+              <OverviewCard
+                color={colorPrimary}
+                title={'Teams'}
+                count={23}
+                icon={<Icons.Teams />}
+              />
+            </Col>
+            <Col span={6}>
+              <OverviewCard
+                color={colorWarning}
+                title={'Employees'}
+                count={23}
+                icon={<Icons.Teams />}
+              />
+            </Col>
+          </Row>
+
+          <Row
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '5px',
+              padding: '15px 0',
+              margin: '20px 0',
+            }}
+          >
+            <Col span={24}>
+              <Row style={{ borderBottom: `2px solid ${colorBorder}` }}>
+                <Col
+                  span={2}
+                  style={{
+                    backgroundColor: colorBgContainerDisabled,
+                    height: '58px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Link to={'/'}>
+                    <Typography.Title level={2}>Teams</Typography.Title>
+                  </Link>
+                </Col>
+                <Col
+                  span={3}
+                  style={{
+                    backgroundColor: colorBgContainerDisabled,
+                    height: '58px',
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Link to={'/employees'}>
+                    <Typography.Title level={2}>Employees</Typography.Title>
+                  </Link>
+                </Col>
+              </Row>
+              {children}
+            </Col>
+          </Row>
         </Content>
       </Layout>
     </Layout>
