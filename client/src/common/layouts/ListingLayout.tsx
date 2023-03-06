@@ -8,8 +8,9 @@ import {
 } from '@ant-design/icons';
 import { Col, Layout, Menu, Row, theme, Typography } from 'antd';
 import { Icons } from '~/assets';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { DividerComponent } from '../DividerComponent';
+import { LinkComponent } from '../LinkComponent';
 
 const { Header, Sider, Content } = Layout;
 function OverviewCard({
@@ -57,7 +58,16 @@ function OverviewCard({
 export function ListingLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
   const {
-    token: { colorBgContainer, colorPrimary, colorWarning, colorBgContainerDisabled, colorBorder },
+    token: {
+      colorBgContainer,
+      colorPrimary,
+      colorWarning,
+      colorBgContainerDisabled,
+      colorBorder,
+      colorTextDisabled,
+      colorText,
+      borderRadius,
+    },
   } = theme.useToken();
 
   return (
@@ -121,42 +131,18 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
           <Row
             style={{
               backgroundColor: 'white',
-              borderRadius: '5px',
+              borderRadius: borderRadius,
               padding: '15px 0',
               margin: '20px 0',
             }}
           >
             <Col span={24}>
               <Row style={{ borderBottom: `2px solid ${colorBorder}` }}>
-                <Col
-                  span={2}
-                  style={{
-                    backgroundColor: colorBgContainerDisabled,
-                    height: '58px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Link to={'/'}>
-                    <Typography.Title level={2}>Teams</Typography.Title>
-                  </Link>
+                <Col span={2}>
+                  <LinkComponent link='/' title='Teams' />
                 </Col>
-                <Col
-                  span={3}
-                  style={{
-                    backgroundColor: colorBgContainerDisabled,
-                    height: '58px',
-                    display: 'flex',
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}
-                >
-                  <Link to={'/employees'}>
-                    <Typography.Title level={2}>Employees</Typography.Title>
-                  </Link>
+                <Col span={3}>
+                  <LinkComponent link='/employees' title='Employees' />
                 </Col>
               </Row>
               {children}

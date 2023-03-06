@@ -56,7 +56,9 @@ function App() {
                 colorBgContainer: '#F9F9F9',
                 colorBgContainerDisabled: '#F1F1F1',
                 colorBorder: '#C3C1BF',
+                colorText: '#24252A',
                 fontFamily: 'Nunito Sans, sans-serif',
+                borderRadius: 5,
               },
               components: {
                 Typography: {
