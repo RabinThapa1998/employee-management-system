@@ -155,7 +155,7 @@ export function AddEmployeeForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { mutate } = useMutation(
+  const { mutate, isLoading } = useMutation(
     (values: any) =>
       fetch(new URL('employee', API_BASE_URL), {
         method: 'POST',
@@ -385,7 +385,15 @@ export function AddEmployeeForm() {
                   token: { colorPrimary: token.colorWarning },
                 }}
               >
-                <Button type='primary' htmlType='submit' size='middle'>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  size='middle'
+                  loading={isLoading}
+                  style={{
+                    minWidth: '146px',
+                  }}
+                >
                   Save
                 </Button>
               </ConfigProvider>
