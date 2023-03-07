@@ -134,6 +134,14 @@ export function AddTeamForm() {
   };
 
   const { token } = useToken();
+  const qrValue =
+    'team' +
+    '=' +
+    Form.useWatch('name', form) +
+    ' ' +
+    'password' +
+    '=' +
+    Form.useWatch('password', form);
 
   return (
     <>
@@ -223,18 +231,7 @@ export function AddTeamForm() {
             </TableSectionWrapper>
             <TableSectionWrapper title='Team QR' align={'middle'} gutter={16} withDivider={false}>
               <Col span={4}>
-                <QRCode
-                  value='hey'
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    border: '1px solid #C3C1BF',
-                    padding: '2px',
-                    borderRadius: '5px',
-                    maxHeight: '118px',
-                    maxWidth: '118px',
-                  }}
-                />
+                <QRCode value={qrValue} className='qr-code' />
               </Col>
               <Col span={4}>
                 <ConfigProvider

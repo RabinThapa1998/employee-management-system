@@ -5,6 +5,7 @@ import { ITeamResponse, ITeamTable } from '~/types';
 import { Icons } from '~/assets';
 import { useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
+import QRCode from 'react-qr-code';
 
 const columns: ColumnsType<ITeamTable> = [
   {
@@ -37,10 +38,11 @@ const columns: ColumnsType<ITeamTable> = [
     width: 150,
   },
   {
-    title: 'Mobile QR Details',
+    title: 'QR Details',
     dataIndex: 'mobile_qr_details',
     key: 'mobile_qr_details',
     width: 150,
+    align: 'center',
   },
   {
     title: 'Total Man Hours',
@@ -74,10 +76,11 @@ export function TeamsTable() {
 
   const teamFormattedData = useMemo(() => {
     const temp = teamList?.data.map((item, idx) => {
+      const qrValue = 'team' + '=' + item.name + ' ' + 'password' + '=' + item.password;
       return {
         team_name: item.name,
         members: item.members.map((i) => i.name).join(', '),
-        mobile_qr_details: item.name,
+        mobile_qr_details: <QRCode value={qrValue} className='qr-code-small' />,
         total_man_hours: item.billable_hrs.toString(),
       };
     });

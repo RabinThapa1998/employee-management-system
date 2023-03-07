@@ -67,7 +67,7 @@ export enum Gender {
 export interface ITeamTable {
   team_name: string;
   members: string;
-  mobile_qr_details: string;
+  mobile_qr_details: React.ReactElement;
   total_man_hours: string;
 }
 
