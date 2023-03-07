@@ -1,20 +1,22 @@
 import { PlusOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, Row, theme, Col, Space } from 'antd';
 import { Link } from 'react-router-dom';
+import { TeamsTable } from '~/components';
 
 export function Teams() {
   const { token } = theme.useToken();
 
   return (
-    <Row
-      style={{
-        padding: '30px',
-      }}
-    >
+    <Row>
       <Space
         direction='horizontal'
         size='middle'
-        style={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          padding: '30px 20px',
+        }}
       >
         <div>search</div>
         <Link to='/add-team'>
@@ -29,6 +31,9 @@ export function Teams() {
           </ConfigProvider>
         </Link>
       </Space>
+      <Col span={24}>
+        <TeamsTable />
+      </Col>
     </Row>
   );
 }

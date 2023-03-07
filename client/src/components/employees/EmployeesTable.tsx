@@ -52,7 +52,7 @@ const columns: ColumnsType<IEmployeeSummary> = [
   },
   {
     title: 'Billable Hours',
-    dataIndex: 'billable_hours',
+    dataIndex: 'billable_hrs',
     key: 'billable_hrs',
 
     width: 150,
@@ -93,7 +93,7 @@ export function EmployeesTable() {
       return {
         id: idx + 1,
         full_name: item.name + ' ' + item.middle_name + ' ' + item.surname,
-        current_team: item.team.length ? item.team.map((i) => i) : 'Available',
+        current_team: item.team.length ? item.team.map((i) => i.name) : 'Available',
         mobile_number: item.phone_number,
         email_address: item.email,
         designation: item.job_position,

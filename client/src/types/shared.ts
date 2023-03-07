@@ -34,7 +34,7 @@ export interface IEmployeeResponse {
 }
 
 export interface ISingleEmployeeResponse {
-  team: string[];
+  team: Team[];
   name: string;
   middle_name: string;
   surname: string;
@@ -53,9 +53,40 @@ export interface ISingleEmployeeResponse {
   updatedAt: Date;
   id: string;
 }
+export interface Team {
+  name: string;
+  id: string;
+}
 
 export enum Gender {
   Female = 'female',
   Male = 'male',
   Other = 'other',
+}
+
+export interface ITeamTable {
+  team_name: string;
+  members: string;
+  mobile_qr_details: string;
+  total_man_hours: string;
+}
+
+export interface ITeamResponse {
+  data: ITeamSingleResponse[];
+}
+
+export interface ITeamSingleResponse {
+  name: string;
+  password: string;
+  members: Member[];
+  billable_hrs: number;
+  active: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  id: string;
+}
+
+export interface Member {
+  name: string;
+  id: string;
 }

@@ -31,7 +31,8 @@
 }
 .table .ant-table-thead > tr > th {
   background: #fff !important;
-  padding: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
   font-size: 18px !important;
   font-weight: bold !important;
   border-radius: 0 !important;
