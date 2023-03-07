@@ -1,26 +1,20 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import {
   Button,
   Checkbox,
   Form,
   Input,
-  Divider,
   theme,
   Select,
-  DatePicker,
-  TimePicker,
-  Typography,
   Row,
   Col,
-  Space,
   ConfigProvider,
   message,
   TreeSelect,
 } from 'antd';
 import { TableSectionWrapper } from '../employees/TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
-import { Icons } from '~/assets';
-import { CloudUploadOutlined, DownloadOutlined, PrinterFilled } from '@ant-design/icons';
+import { DownloadOutlined, PrinterFilled } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import { BillableHourField } from '~/common';
 import { API_BASE_URL } from '~/config';
@@ -75,8 +69,17 @@ export function AddTeamForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm<ITeamForm>();
-  const nameValue = Form.useWatch('members', form);
-  console.log('🚀 ~ file: AddTeamForm.tsx:73 ~ AddTeamForm ~ nameValue:', nameValue);
+  const memberData = Form.useWatch('members', form);
+  const getAccBillableHrs = (members: string[]) => {
+    if (members)
+      return members.reduce((acc: number, curr: string) => {
+        const [id, billableHrs] = curr.split('-');
+        return acc + Number(billableHrs);
+      }, 0);
+    return 0;
+  };
+  form.setFieldValue('billable_hrs', getAccBillableHrs(memberData));
+
   const { data: employeeList, isLoading: getEmployeeIsLoading } = useQuery(['get-employee'], () =>
     fetch(new URL('employee', API_BASE_URL)).then((res) => res.json()),
   );
@@ -84,7 +87,7 @@ export function AddTeamForm() {
   const employeeOptions = useMemo<IEmployeeOption[]>(() => {
     if (employeeList)
       return employeeList?.data.map((employee: any) => ({
-        value: employee.id,
+        value: `${employee.id}-${employee.billable_hrs}`,
         label: employee.name,
         job_position: employee.job_position,
         status: employee.team.length ? 'Not Available' : 'Available',
@@ -168,13 +171,21 @@ export function AddTeamForm() {
                   name={'members'}
                   rules={[{ required: true, message: 'required' }]}
                 >
-                  <TreeSelect
+                  <Select
+                    mode='multiple'
+                    placeholder='Select Team Members'
                     style={{ width: '100%' }}
-                    placeholder='Please select'
-                    treeCheckable
-                    treeData={employeeOptions}
-                    showCheckedStrategy={TreeSelect.SHOW_PARENT}
-                  ></TreeSelect>
+                    optionFilterProp='label'
+                    loading={getEmployeeIsLoading}
+                  >
+                    {employeeOptions.map((employee) => (
+                      <Option key={employee.value} value={employee.value}>
+                        <Checkbox checked={memberData?.includes(employee.value)}>
+                          {employee.label}
+                        </Checkbox>
+                      </Option>
+                    ))}
+                  </Select>
                 </Form.Item>
               </Col>
 
