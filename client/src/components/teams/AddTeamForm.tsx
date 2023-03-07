@@ -253,7 +253,7 @@ export function AddTeamForm() {
                   token: { colorPrimary: token.colorWarning },
                 }}
               >
-                <Button type='primary' htmlType='submit' size='middle'>
+                <Button type='primary' htmlType='submit' size='middle' style={{ width: '146px' }}>
                   Save
                 </Button>
               </ConfigProvider>
