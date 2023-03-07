@@ -15,6 +15,7 @@ import {
   Space,
   ConfigProvider,
   message,
+  TreeSelect,
 } from 'antd';
 import { TableSectionWrapper } from '../employees/TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
@@ -24,6 +25,8 @@ import QRCode from 'react-qr-code';
 import { BillableHourField } from '~/common';
 import { API_BASE_URL } from '~/config';
 import { useMutation, useQuery } from '@tanstack/react-query';
+const { TreeNode } = TreeSelect;
+const { Option } = Select;
 
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
@@ -56,18 +59,35 @@ const basicInformation: IForm[] = [
 ];
 
 const { useToken } = theme;
+interface IEmployeeOption {
+  value: string;
+  label: string;
+  job_position: string;
+  status: string;
+}
+interface ITeamForm {
+  name: string;
+  password: string;
+  members: string[];
+  billable_hrs: number;
+}
 export function AddTeamForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
+  const [form] = Form.useForm<ITeamForm>();
+  const nameValue = Form.useWatch('members', form);
+  console.log('🚀 ~ file: AddTeamForm.tsx:73 ~ AddTeamForm ~ nameValue:', nameValue);
   const { data: employeeList, isLoading: getEmployeeIsLoading } = useQuery(['get-employee'], () =>
     fetch(new URL('employee', API_BASE_URL)).then((res) => res.json()),
   );
-  const employeeOptions = useMemo(() => {
+
+  const employeeOptions = useMemo<IEmployeeOption[]>(() => {
     if (employeeList)
       return employeeList?.data.map((employee: any) => ({
         value: employee.id,
         label: employee.name,
-        status: employee.team.length ? employee.team[0] : 'available',
+        job_position: employee.job_position,
+        status: employee.team.length ? 'Not Available' : 'Available',
       }));
     else return [];
   }, [employeeList]);
@@ -111,6 +131,7 @@ export function AddTeamForm() {
   };
 
   const { token } = useToken();
+
   return (
     <>
       {contextHolder}
@@ -118,6 +139,7 @@ export function AddTeamForm() {
         <Col span={24}>
           <Form
             name='basic'
+            form={form}
             initialValues={{ remember: true }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
@@ -143,14 +165,16 @@ export function AddTeamForm() {
               <Col span={10}>
                 <Form.Item
                   label={'Team Members'}
-                  name={'team_members'}
+                  name={'members'}
                   rules={[{ required: true, message: 'required' }]}
                 >
-                  <Select
-                    placeholder={'Select Employees'}
-                    options={employeeOptions}
-                    loading={employeeOptions.length === 0}
-                  />
+                  <TreeSelect
+                    style={{ width: '100%' }}
+                    placeholder='Please select'
+                    treeCheckable
+                    treeData={employeeOptions}
+                    showCheckedStrategy={TreeSelect.SHOW_PARENT}
+                  ></TreeSelect>
                 </Form.Item>
               </Col>
 
@@ -159,7 +183,7 @@ export function AddTeamForm() {
                   <Col span={8}>
                     <Form.Item
                       label={'Billable Hours'}
-                      name={'billable_hours'}
+                      name={'billable_hrs'}
                       rules={[{ required: true, message: 'required' }]}
                     >
                       <BillableHourField
@@ -230,3 +254,55 @@ export function AddTeamForm() {
     </>
   );
 }
+
+/* <Form.Item
+                  label={'Team Members'}
+                  name={'members'}
+                  rules={[{ required: true, message: 'required' }]}
+                >
+                  <Row
+                    style={{
+                      height: '263px',
+                      overflow: 'scroll',
+                      padding: '10px 0px 10px 15px',
+                      borderRadius: '5px',
+                      backgroundColor: token.colorBgContainerDisabled,
+                      border: `1px solid ${token.colorBorder}`,
+                    }}
+                  >
+                    <Checkbox.Group
+                      style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
+                    >
+                      {employeeOptions.map((o) => (
+                        <Checkbox value={o.value} key={o.value}>
+                          <div
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              width: '300px',
+                              height: '42px',
+                              marginBottom: '10px',
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                              }}
+                            >
+                              <Typography.Paragraph style={{ margin: 0 }}>
+                                {o.label}
+                              </Typography.Paragraph>
+                              <Typography.Text style={{ color: token.colorTextDisabled }}>
+                                {o.job_position}
+                              </Typography.Text>
+                            </div>
+                            <Typography.Paragraph style={{ margin: 0 }}>
+                              {o.status}
+                            </Typography.Paragraph>
+                          </div>
+                        </Checkbox>
+                      ))}
+                    </Checkbox.Group>
+                  </Row>
+                </Form.Item> */

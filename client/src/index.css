@@ -110,3 +110,7 @@
 .ant-form-item-label {
   font-weight: 600;
 }
+
+.ant-checkbox-wrapper {
+  margin: 0 !important;
+}

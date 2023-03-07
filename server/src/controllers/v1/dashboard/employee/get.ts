@@ -4,7 +4,7 @@ import { Employee } from "../../../../models";
 
 export const getEmployeeHandler = async (req: Request, res: Response) => {
   try {
-    const employee = await Employee.find();
+    const employee = await Employee.find().populate("team", "name");
     if (!employee) throw new BadRequestError("Employee List Empty");
 
     res.status(200).json({
