@@ -19,11 +19,14 @@ import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
 import { BillableHourField } from '~/common';
+import { useMutation } from '@tanstack/react-query';
+import { API_BASE_URL } from '~/config';
+
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 type option = {
-  value: string;
+  value: string | number | undefined;
   label: string;
 }[];
 interface IForm {
@@ -106,7 +109,7 @@ const workingHours: IForm[] = [
     type: 'string',
   },
   {
-    name: 'ends_in',
+    name: 'ends_at',
     label: 'Ends In',
     placeholder: 'HH-MM',
     type: 'string',
@@ -146,10 +149,34 @@ const billableInformation = [
 ];
 
 const { useToken } = theme;
-export function AddEmployeeTable() {
+export function AddEmployeeForm() {
   const dispatch = useAppDispatch();
+  console.log('base', new URL('employee', API_BASE_URL));
+
+  const { mutate } = useMutation(
+    (values: any) =>
+      fetch(new URL('employee', API_BASE_URL), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      }),
+    {
+      onSuccess: (data) => {
+        console.log(data);
+      },
+    },
+  );
+
   const onFinish = (values: any) => {
+    console.log('🚀 ~ file: AddEmployeeForm.tsx:173 ~ onFinish ~ values:', values);
     dispatch(add(values));
+    if (values.team === 'available') {
+      mutate({ ...values, team: [] });
+    } else {
+      mutate(values);
+    }
   };
 
   const { token } = useToken();
@@ -165,6 +192,7 @@ export function AddEmployeeTable() {
           autoComplete='off'
           layout='vertical'
           wrapperCol={{ span: 24 }}
+          onChange={(e) => console.log(e)}
         >
           <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
             <Col span={4}>
@@ -291,15 +319,20 @@ export function AddEmployeeTable() {
               if (item.name === 'is_billable') {
                 return (
                   <Col key={item.name} span={8}>
-                    <Form.Item name={item.name}>
-                      <ConfigProvider
-                        theme={{
-                          token: { colorPrimary: '#000' },
-                        }}
+                    <ConfigProvider
+                      theme={{
+                        token: { colorPrimary: '#000' },
+                      }}
+                    >
+                      <Form.Item
+                        name={item.name}
+                        rules={[{ required: true, message: 'required' }]}
+                        valuePropName='checked'
+                        initialValue={true}
                       >
-                        <Checkbox>{item.label}</Checkbox>
-                      </ConfigProvider>
-                    </Form.Item>
+                        <Checkbox defaultChecked>{item.label}</Checkbox>
+                      </Form.Item>
+                    </ConfigProvider>
                   </Col>
                 );
               }

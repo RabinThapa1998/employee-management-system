@@ -79,7 +79,6 @@ const columns: ColumnsType<IEmployeeSummary> = [
 
 export function EmployeesTable() {
   const employeeList = useAppSelector(employeeSelector);
-  console.log('🚀 ~ file: EmployeesTable.tsx:70 ~ EmployeesTable ~ employeeList:', employeeList);
 
   const employeeFormattedData = useMemo(() => {
     const temp = employeeList.map((item, idx) => {

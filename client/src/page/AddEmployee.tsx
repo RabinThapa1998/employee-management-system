@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import { BreadCrumbComponent } from '~/common';
-import { AddEmployeeTable } from '~/components';
+import { AddEmployeeForm } from '~/components';
 import { IBreadCrumbs } from '~/types';
 
 export function AddEmployee() {
@@ -26,7 +26,7 @@ export function AddEmployee() {
           Add Employee
         </Typography.Title>
       </div>
-      <AddEmployeeTable />
+      <AddEmployeeForm />
     </div>
   );
 }
