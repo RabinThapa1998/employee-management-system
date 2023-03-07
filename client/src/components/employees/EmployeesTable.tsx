@@ -82,12 +82,11 @@ const columns: ColumnsType<IEmployeeSummary> = [
 export function EmployeesTable() {
   // const employeeList = useAppSelector(employeeSelector);
 
-  const { data: employeeList, isLoading } = useQuery(['employeeTable'], () =>
+  const { data: employeeList, isLoading } = useQuery(['get-employee'], () =>
     fetch(new URL('employee', API_BASE_URL)).then(
       (res) => res.json() as Promise<IEmployeeResponse>,
     ),
   );
-  console.log('🚀 ~ file: EmployeesTable.tsx:88 ~ EmployeesTable ~ data:', employeeList);
 
   const employeeFormattedData = useMemo(() => {
     const temp = employeeList?.data.map((item, idx) => {

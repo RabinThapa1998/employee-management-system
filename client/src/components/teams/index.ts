@@ -1,1 +1,1 @@
-export * from './AddTeamTable';
+export * from './AddTeamForm';

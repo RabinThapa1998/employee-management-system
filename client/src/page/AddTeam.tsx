@@ -1,6 +1,6 @@
 import { Typography } from 'antd';
 import { BreadCrumbComponent } from '~/common';
-import { AddTeamTable } from '~/components';
+import { AddTeamForm } from '~/components';
 import { IBreadCrumbs } from '~/types';
 
 export function AddTeam() {
@@ -26,7 +26,7 @@ export function AddTeam() {
           Add Team
         </Typography.Title>
       </div>
-      <AddTeamTable />
+      <AddTeamForm />
     </div>
   );
 }
