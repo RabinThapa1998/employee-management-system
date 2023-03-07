@@ -129,8 +129,7 @@ export function AddTeamForm() {
     },
   );
   const onFinish = (values: any) => {
-    dispatch(add(values));
-    mutate(values);
+    mutate({ ...values, members: values.members.map((member: string) => member.split('-')[0]) });
   };
 
   const { token } = useToken();
@@ -265,55 +264,3 @@ export function AddTeamForm() {
     </>
   );
 }
-
-/* <Form.Item
-                  label={'Team Members'}
-                  name={'members'}
-                  rules={[{ required: true, message: 'required' }]}
-                >
-                  <Row
-                    style={{
-                      height: '263px',
-                      overflow: 'scroll',
-                      padding: '10px 0px 10px 15px',
-                      borderRadius: '5px',
-                      backgroundColor: token.colorBgContainerDisabled,
-                      border: `1px solid ${token.colorBorder}`,
-                    }}
-                  >
-                    <Checkbox.Group
-                      style={{ width: '100%', display: 'flex', flexDirection: 'column' }}
-                    >
-                      {employeeOptions.map((o) => (
-                        <Checkbox value={o.value} key={o.value}>
-                          <div
-                            style={{
-                              display: 'flex',
-                              justifyContent: 'space-between',
-                              width: '300px',
-                              height: '42px',
-                              marginBottom: '10px',
-                            }}
-                          >
-                            <div
-                              style={{
-                                display: 'flex',
-                                flexDirection: 'column',
-                              }}
-                            >
-                              <Typography.Paragraph style={{ margin: 0 }}>
-                                {o.label}
-                              </Typography.Paragraph>
-                              <Typography.Text style={{ color: token.colorTextDisabled }}>
-                                {o.job_position}
-                              </Typography.Text>
-                            </div>
-                            <Typography.Paragraph style={{ margin: 0 }}>
-                              {o.status}
-                            </Typography.Paragraph>
-                          </div>
-                        </Checkbox>
-                      ))}
-                    </Checkbox.Group>
-                  </Row>
-                </Form.Item> */
