@@ -23,8 +23,12 @@ export const createTeamHandler = async (req: Request, res: Response) => {
     //check if employee already in a team
     const _employeeInTeam = await Employee.find({
       _id: { $in: members },
-      team: { $ne: null },
+      team: { $eq: null },
     });
+    console.log(
+      "🚀 ~ file: create.ts:28 ~ createTeamHandler ~ _employeeInTeam:",
+      _employeeInTeam
+    );
     if (_employeeInTeam.length > 0)
       throw new BadRequestError("Employee Already in a Team");
 
