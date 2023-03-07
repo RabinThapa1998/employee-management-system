@@ -66,7 +66,7 @@ export function AddTeamForm() {
     if (employeeList)
       return employeeList?.data.map((employee: any) => ({
         value: employee.id,
-        label: employee.full_name,
+        label: employee.name,
         status: employee.team.length ? employee.team[0] : 'available',
       }));
     else return [];
