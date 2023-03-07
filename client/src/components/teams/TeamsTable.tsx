@@ -23,9 +23,9 @@ const columns: ColumnsType<ITeamTable> = [
     ),
     onHeaderCell: () => {
       return {
-        // style: {
-        //   paddingLeft: '30px',
-        // },
+        style: {
+          paddingLeft: '30px',
+        },
       };
     },
   },
