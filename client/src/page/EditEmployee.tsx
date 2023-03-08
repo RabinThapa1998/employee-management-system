@@ -1,9 +1,9 @@
 import { Typography } from 'antd';
 import { BreadCrumbComponent } from '~/common';
-import { AddEmployeeForm } from '~/components';
+import { EditEmployeeForm } from '~/components';
 import { IBreadCrumbs } from '~/types';
 
-export function AddEmployee() {
+export function EditEmployee() {
   const crumbs: IBreadCrumbs = [
     {
       title: 'Manage Users',
@@ -15,7 +15,7 @@ export function AddEmployee() {
     },
     {
       title: 'Add Employee',
-      link: '/add-employee',
+      link: '/:id',
     },
   ];
   return (
@@ -23,10 +23,10 @@ export function AddEmployee() {
       <div style={{ margin: '10px 0' }}>
         <BreadCrumbComponent crumbs={crumbs} />
         <Typography.Title level={1} style={{ fontWeight: 800 }}>
-          Add Employee
+          Edit Employee
         </Typography.Title>
       </div>
-      <AddEmployeeForm />
+      <EditEmployeeForm />
     </div>
   );
 }
