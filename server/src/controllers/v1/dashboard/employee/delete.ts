@@ -7,6 +7,11 @@ export const deleteEmployeeHandler = async (req: Request, res: Response) => {
     const { id } = req.params;
     const employee = await Employee.findById(id);
     if (!employee) throw new BadRequestError("Employee not found");
+    console.log(
+      "🚀 ~ file: delete.ts:29 ~ deleteEmployeeHandler ~ employee:",
+      employee
+    );
+
     //delete employee from the team
     if (employee.team.length) {
       const _team = await Team.findById(employee.team[0]);

@@ -20,7 +20,7 @@ export const createTeamHandler = async (req: Request, res: Response) => {
     //check if employee already in a team
     const _employeeInTeam = await Employee.find({
       _id: { $in: members },
-      team: { $eq: null },
+      team: { $ne: [] },
     });
 
     if (_employeeInTeam.length > 0)
