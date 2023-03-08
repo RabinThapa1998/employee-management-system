@@ -7,11 +7,11 @@ export function AddEmployee() {
   const crumbs: IBreadCrumbs = [
     {
       title: 'Manage Users',
-      link: '/',
+      link: '/employees',
     },
     {
       title: 'Employee',
-      link: '/',
+      link: '/employees',
     },
     {
       title: 'Add Employee',
