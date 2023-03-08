@@ -29,6 +29,32 @@ export const updateTeamHandler = async (req: Request, res: Response) => {
     team.billable_hrs = billable_hrs || team.billable_hrs;
     await team.save();
 
+    //update employee with new team
+    if (members.length) {
+      for (let i = 0; i < members.length; i++) {
+        const employee = await Employee.findById(members[i]);
+        if (!employee) throw new BadRequestError("Employee not found");
+        employee.team = [team.id];
+        await employee.save();
+      }
+    }
+    //remove team from employee if not in members
+    const employeeNotInMembers = team.members.filter(
+      (old) => !members.includes(old)
+    );
+    console.log(
+      "🚀 ~ file: update.ts:45 ~ updateTeamHandler ~ employeeNotInMembers:",
+      employeeNotInMembers
+    );
+    if (employeeNotInMembers.length) {
+      for (let i = 0; i < team.members.length; i++) {
+        const employee = await Employee.findById(team.members[i]);
+        if (!employee) throw new BadRequestError("Employee not found");
+        employee.team = [];
+        await employee.save();
+      }
+    }
+
     res.status(200).json({
       data: team,
     });

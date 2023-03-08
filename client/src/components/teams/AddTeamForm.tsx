@@ -12,6 +12,7 @@ import {
   message,
   TreeSelect,
   Typography,
+  Space,
 } from 'antd';
 import { TableSectionWrapper } from '../employees/TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
@@ -172,23 +173,28 @@ export function AddTeamForm() {
                   >
                     {employeeOptions.map((employee) => (
                       <Option key={employee.value} value={employee.value}>
-                        <Checkbox
-                          checked={memberData?.includes(employee.value)}
-                          onClick={(e) => e.stopPropagation()}
+                        <div
+                          style={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            justifyContent: 'space-between',
+                            alignItems: 'start',
+                            backgroundColor: token.colorBgContainerDisabled,
+                            padding: '0 10px',
+                          }}
                         >
-                          <div
-                            style={{
-                              display: 'flex',
-                              flexDirection: 'row',
-                              justifyContent: 'space-between',
-                              alignItems: 'start',
-                              width: '200px',
-                            }}
-                          >
-                            <Typography.Title level={5}>{employee.label}</Typography.Title>
-                            <Typography.Title level={5}>{employee.status}</Typography.Title>
-                          </div>
-                        </Checkbox>
+                          <Space direction='vertical' size={0}>
+                            <Typography.Text>{employee.label}</Typography.Text>
+                            <Typography.Text
+                              style={{
+                                color: token.colorTextDisabled,
+                              }}
+                            >
+                              {employee.job_position}
+                            </Typography.Text>
+                          </Space>
+                          <Typography.Title level={5}>{employee.status}</Typography.Title>
+                        </div>
                       </Option>
                     ))}
                   </Select>
