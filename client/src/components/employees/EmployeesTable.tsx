@@ -17,23 +17,17 @@ import { employeeSelector, useAppSelector } from '~/global-states';
 import { Icons } from '~/assets';
 import { useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
-import { DividerComponent } from '~/common';
-import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 
-const Card = ({ title, desc, token }: { title: string; desc: string; token: any }) => (
-  <Col span={12}>
-    <Typography.Title level={4} style={{ color: token.colorTextDisabled, marginBottom: '6px' }}>
-      {title}
-    </Typography.Title>
-    <Typography.Text>{desc}</Typography.Text>
-  </Col>
-);
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
+  const [employeeDrawer, setEmployeeDrawer] = useState<any>({});
+
   const { token } = theme.useToken();
 
-  const openEmployeeDrawer = () => {
+  const openEmployeeDrawer = (data: any) => {
     setOpen(true);
+    setEmployeeDrawer(data);
   };
 
   const closeEmployeeDrawer = () => {
@@ -70,8 +64,8 @@ export function EmployeesTable() {
     },
     {
       title: 'Email Address',
-      dataIndex: 'email_address',
-      key: 'email_address',
+      dataIndex: 'email',
+      key: 'email',
 
       width: 200,
     },
@@ -97,7 +91,7 @@ export function EmployeesTable() {
       width: 150,
       render: (_, record) => (
         <Space size='middle'>
-          <button className='visibility' onClick={openEmployeeDrawer}>
+          <button className='visibility' onClick={() => openEmployeeDrawer(_)}>
             <Icons.Visibility />
           </button>
           <button className='edit'>
@@ -123,10 +117,13 @@ export function EmployeesTable() {
         full_name: item.name + ' ' + item.middle_name + ' ' + item.surname,
         current_team: item.team.length ? item.team.map((i) => i.name) : 'Available',
         mobile_number: item.phone_number,
-        email_address: item.email,
+        email: item.email,
         designation: item.job_position,
         billable_hrs: `${item.billable_hrs} hours/week`,
         employee_id: item.id,
+        billable_status: item.is_billable,
+        start_date: item.starts_at,
+        address: item.address,
       };
     });
     return temp;
@@ -148,67 +145,18 @@ export function EmployeesTable() {
         open={open}
         width={500}
       >
-        <Row>
-          <Col span={24}>
-            <Avatar size={120} icon={<UserOutlined />} />
-            <Typography.Title style={{ paddingTop: '30px' }}>Chadwick</Typography.Title>
-            <Typography.Text style={{ color: token.colorTextDisabled }}>
-              Chadwick@gmail.com
-            </Typography.Text>
-            <div
-              style={{
-                backgroundColor: token.colorPrimary,
-                width: '98px',
-                height: '32px',
-                color: 'white',
-                borderRadius: '20px',
-                display: 'grid',
-                placeItems: 'center',
-                marginTop: '10px',
-              }}
-            >
-              <Typography.Title level={4} style={{ color: 'white' }}>
-                Employee
-              </Typography.Title>
-            </div>
-          </Col>
-          <DividerComponent />
-          <Col span={24}>
-            <Row>
-              <Card title='Designation' desc='Fabricator' token={token} />
-              <Card title='Contact' desc='Fabricator' token={token} />
-            </Row>
-            <Row style={{ marginTop: '20px' }}>
-              <Card title='Address' desc='Address' token={token} />
-            </Row>
-          </Col>
-          <DividerComponent />
-          <Col span={24}>
-            <Row>
-              <Card title='Start Date' desc='Fabricator' token={token} />
-              <Card title='Role' desc='Fabricator' token={token} />
-            </Row>
-            <Row style={{ marginTop: '20px' }}>
-              <Card title='Billable Status' desc='Address' token={token} />
-              <Card title='Billable Hours' desc='Address' token={token} />
-            </Row>
-          </Col>
-          <Col span={24}>
-            <ConfigProvider
-              theme={{
-                token: { colorPrimary: token.colorWarning },
-              }}
-            >
-              <Button
-                icon={<EditOutlined />}
-                type='primary'
-                style={{ width: '100%', marginTop: '30px' }}
-              >
-                Edit Profile
-              </Button>
-            </ConfigProvider>
-          </Col>
-        </Row>
+        <EmployeeDrawerComponent
+          fullName={employeeDrawer?.full_name}
+          email={employeeDrawer?.email}
+          contact={employeeDrawer?.mobile_number}
+          address={employeeDrawer?.address}
+          designation={employeeDrawer?.designation}
+          billableHours={employeeDrawer?.billable_hrs}
+          billableStatus={employeeDrawer?.billable_status}
+          startDate={employeeDrawer?.start_date}
+          token={token}
+          id={employeeDrawer?.employee_id}
+        />
       </Drawer>
     </>
   );

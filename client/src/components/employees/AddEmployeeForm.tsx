@@ -37,6 +37,7 @@ interface IForm {
   placeholder?: string;
   options?: option;
   type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
+  required: boolean;
 }
 
 const basicInformation: IForm[] = [
@@ -45,24 +46,28 @@ const basicInformation: IForm[] = [
     label: 'Name',
     placeholder: 'Enter name',
     type: 'string',
+    required: true,
   },
   {
     name: 'middle_name',
     label: 'Middle Name',
     placeholder: 'Enter middle name',
     type: 'string',
+    required: false,
   },
   {
     name: 'surname',
     label: 'Surname',
     placeholder: 'Enter surname',
     type: 'string',
+    required: true,
   },
   {
     name: 'dob',
     label: 'Birth Date',
     placeholder: 'DD/MM/YYYY',
     type: 'date',
+    required: true,
   },
   {
     name: 'gender',
@@ -83,24 +88,28 @@ const basicInformation: IForm[] = [
     ],
     placeholder: 'Choose Gender',
     type: 'string',
+    required: true,
   },
   {
     name: 'address',
     label: 'Address',
     placeholder: 'Enter Address',
     type: 'string',
+    required: true,
   },
   {
     name: 'phone_number',
     label: 'Phone Number',
     placeholder: 'Enter Phone Number',
     type: 'string',
+    required: true,
   },
   {
     name: 'email',
     label: 'Email Address',
     placeholder: 'Enter Email Address',
     type: 'email',
+    required: true,
   },
 ];
 const workingHours: IForm[] = [
@@ -109,12 +118,14 @@ const workingHours: IForm[] = [
     label: 'Starts At',
     placeholder: 'HH-MM',
     type: 'string',
+    required: true,
   },
   {
     name: 'ends_at',
     label: 'Ends In',
     placeholder: 'HH-MM',
     type: 'string',
+    required: true,
   },
 ];
 const jobs: IForm[] = [
@@ -123,6 +134,7 @@ const jobs: IForm[] = [
     label: 'Job Position',
     placeholder: 'Enter Job Position',
     type: 'string',
+    required: true,
   },
   {
     name: 'team',
@@ -135,6 +147,7 @@ const jobs: IForm[] = [
       },
     ],
     type: 'string',
+    required: true,
   },
 ];
 const billableInformation = [
@@ -142,11 +155,13 @@ const billableInformation = [
     name: 'is_billable',
     label: 'This user is billable',
     type: 'checkbox',
+    required: true,
   },
   {
     name: 'billable_hrs',
     label: 'Billable Hours',
     placeholder: 'Enter Billable Hours',
+    required: true,
   },
 ];
 
@@ -249,7 +264,7 @@ export function AddEmployeeForm() {
                       <Form.Item
                         label={item.label}
                         name={item.name}
-                        rules={[{ required: true, message: 'required' }]}
+                        rules={[{ required: item.required, message: 'required' }]}
                       >
                         <Select placeholder={item.placeholder} options={item.options} />
                       </Form.Item>
@@ -262,7 +277,7 @@ export function AddEmployeeForm() {
                       <Form.Item
                         label={item.label}
                         name={item.name}
-                        rules={[{ required: true, message: 'required' }]}
+                        rules={[{ required: item.required, message: 'required' }]}
                       >
                         <DatePicker
                           placeholder={item.placeholder}
@@ -278,7 +293,7 @@ export function AddEmployeeForm() {
                     <Form.Item
                       label={item.label}
                       name={item.name}
-                      rules={[{ required: true, type: item.type as any }]}
+                      rules={[{ required: item.required, type: item.type as any }]}
                     >
                       <Input placeholder={item.placeholder} />
                     </Form.Item>
@@ -293,7 +308,7 @@ export function AddEmployeeForm() {
                   <Form.Item
                     label={item.label}
                     name={item.name}
-                    rules={[{ required: true, message: 'required' }]}
+                    rules={[{ required: item.required, message: 'required' }]}
                   >
                     <TimePicker
                       placeholder={item.placeholder}
@@ -314,7 +329,7 @@ export function AddEmployeeForm() {
                         label={item.label}
                         name={item.name}
                         //
-                        rules={[{ required: true, message: 'required' }]}
+                        rules={[{ required: item.required, message: 'required' }]}
                       >
                         <Select
                           placeholder={item.placeholder}
@@ -330,7 +345,7 @@ export function AddEmployeeForm() {
                     <Form.Item
                       label={item.label}
                       name={item.name}
-                      rules={[{ required: true, message: 'required' }]}
+                      rules={[{ required: item.required, message: 'required' }]}
                     >
                       <Input placeholder={item.placeholder} />
                     </Form.Item>
@@ -351,7 +366,7 @@ export function AddEmployeeForm() {
                       >
                         <Form.Item
                           name={item.name}
-                          rules={[{ required: true, message: 'required' }]}
+                          rules={[{ required: item.required, message: 'required' }]}
                           valuePropName='checked'
                           initialValue={true}
                         >
@@ -366,7 +381,7 @@ export function AddEmployeeForm() {
                     <Form.Item
                       label={item.label}
                       name={item.name}
-                      rules={[{ required: true, message: 'required' }]}
+                      rules={[{ required: item.required, message: 'required' }]}
                     >
                       <BillableHourField
                         placeholder={item.placeholder}

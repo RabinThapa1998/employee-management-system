@@ -3,7 +3,7 @@ export interface IEmployeeSummary {
   full_name: string;
   current_team: string | string[];
   mobile_number: string;
-  email_address: string;
+  email: string;
   designation: string;
   billable_hrs: string;
 }
