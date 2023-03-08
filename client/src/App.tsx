@@ -69,6 +69,7 @@ function App() {
                   colorBgContainerDisabled: '#F1F1F1',
                   colorBorder: '#C3C1BF',
                   colorText: '#24252A',
+                  colorError: '#F71E1E',
                   fontFamily: 'Nunito Sans, sans-serif',
                   borderRadius: 5,
                 },

@@ -98,6 +98,17 @@ h6 {
   background: #f71e1e0f 0% 0% no-repeat padding-box;
 }
 
+.ant-modal-close {
+  height: 32px !important;
+  width: 32px !important;
+  background-color: #f71e1e1a !important;
+  color: #f7541e !important;
+  border: 1px solid #f71e1e1a !important;
+}
+.ant-modal-close:hover {
+  background: #f71e1e0f 0% 0% no-repeat padding-box !important;
+}
+
 .billableHrs-container {
   display: flex;
   flex-direction: row;

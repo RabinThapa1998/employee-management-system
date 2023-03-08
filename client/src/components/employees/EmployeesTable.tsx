@@ -10,6 +10,7 @@ import {
   Button,
   ConfigProvider,
   Avatar,
+  Modal,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { IEmployeeResponse, IEmployeeSummary } from '~/types';
@@ -19,12 +20,29 @@ import { useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 import { useNavigate } from 'react-router-dom';
+import { CloseOutlined } from '@ant-design/icons';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const [employeeDrawer, setEmployeeDrawer] = useState<any>({});
   const navigate = useNavigate();
   const { token } = theme.useToken();
+
+  const onDeleteModalOpen = () => {
+    setOpenDeleteModal(true);
+  };
+  const onDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleOk = () => {
+    console.log('OK');
+    onDeleteModalClose();
+  };
+  const handleCancel = () => {
+    console.log('Cancel');
+    onDeleteModalClose();
+  };
 
   const openEmployeeDrawer = (data: any) => {
     setOpen(true);
@@ -101,7 +119,7 @@ export function EmployeesTable() {
           <button className='edit' onClick={() => handleEdit(_.employee_id)}>
             <Icons.Edit />
           </button>
-          <button className='delete'>
+          <button className='delete' onClick={onDeleteModalOpen}>
             <Icons.Delete />
           </button>
         </Space>
@@ -142,6 +160,31 @@ export function EmployeesTable() {
         pagination={{ position: ['bottomRight'] }}
         className='table'
       />
+      <Modal
+        title={<Typography.Title level={1}>Delete Team</Typography.Title>}
+        open={openDeleteModal}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        closeIcon={<CloseOutlined />}
+        footer={
+          <Row justify='start'>
+            <Col>
+              <Space>
+                <Button type='primary' onClick={handleOk} danger>
+                  Delete
+                </Button>
+                <Button onClick={handleCancel} type='primary'>
+                  Cancel
+                </Button>
+              </Space>
+            </Col>
+          </Row>
+        }
+      >
+        <Typography.Paragraph style={{ margin: '30px 0' }}>
+          Are you sure you want to delete John Doe from the list?
+        </Typography.Paragraph>
+      </Modal>
       <Drawer
         title={<Typography.Title>Employee Information</Typography.Title>}
         placement='right'
