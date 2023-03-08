@@ -24,7 +24,6 @@ import { API_BASE_URL } from '~/config';
 import { dateToUnix, unixToDate } from '~/helpers';
 import { useParams } from 'react-router-dom';
 import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
-import moment from 'moment';
 import dayjs from 'dayjs';
 const { useToken } = theme;
 export function EditEmployeeForm() {
@@ -51,12 +50,11 @@ export function EditEmployeeForm() {
       },
     },
   );
-  console.log('🚀 ~ file: EditEmployeeForm.tsx:176 ~ EditEmployeeForm ~ data:', data);
 
   const { mutate, isLoading } = useMutation(
     (values: any) =>
-      fetch(new URL('employee', API_BASE_URL), {
-        method: 'POST',
+      fetch(new URL(`employee/${id}`, API_BASE_URL), {
+        method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -67,7 +65,7 @@ export function EditEmployeeForm() {
         if (res.status === 200) {
           messageApi.open({
             type: 'success',
-            content: 'Employee added successfully',
+            content: 'Updated successfully',
           });
         } else {
           res.json().then((data) => {
@@ -79,7 +77,6 @@ export function EditEmployeeForm() {
         }
       },
       onError: (error) => {
-        console.log('🚀 ~ file: AddEmployeeForm.tsx:183 ~ AddEmployeeForm ~ error:', error);
         messageApi.open({
           type: 'error',
           content: 'Something went wrong Try again!',
@@ -296,7 +293,7 @@ export function EditEmployeeForm() {
                     minWidth: '146px',
                   }}
                 >
-                  Save
+                  Save & Update
                 </Button>
               </ConfigProvider>
             </Form.Item>
