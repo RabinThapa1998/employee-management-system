@@ -79,8 +79,10 @@ export function EditTeamForm() {
     () => request(`team/${id}`).then((res) => res.data.data),
     {
       onSuccess: (response) => {
+        console.log('🚀 ~ file: EditTeamForm.tsx:82 ~ EditTeamForm ~ response:', response);
         form.setFieldsValue({
           ...response,
+          members: response.members.map((member: any) => `${member.id}-${member.billable_hrs}`),
         });
       },
     },
@@ -111,12 +113,12 @@ export function EditTeamForm() {
   }, [employeeList]);
 
   const { mutate, isLoading } = useMutation(
-    (values: any) => request.patch('team', values) as Promise<Response>,
+    (values: any) => request.patch(`team/${id}`, values) as Promise<Response>,
     {
       onSuccess: (res: Response) => {
         messageApi.open({
           type: 'success',
-          content: 'Team added successfully',
+          content: 'Team Updated successfully',
         });
       },
       onError: (error: any) => {

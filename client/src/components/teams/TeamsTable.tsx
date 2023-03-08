@@ -7,12 +7,13 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import QRCode from 'react-qr-code';
 import { request } from '~/utils';
+import { useNavigate } from 'react-router-dom';
 
 export function TeamsTable() {
   const [messageApi, contextHolder] = message.useMessage();
   const [deleteTeamState, setDeleteTeamState] = useState<any>({});
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-
+  const navigate = useNavigate();
   const {
     data: teamList,
     isLoading,
@@ -52,6 +53,9 @@ export function TeamsTable() {
   };
   const handleCancel = () => {
     onDeleteModalClose();
+  };
+  const handleEdit = (id: string) => {
+    navigate(id);
   };
   const columns: ColumnsType<any> = [
     {
@@ -104,7 +108,7 @@ export function TeamsTable() {
       width: 150,
       render: (_, record) => (
         <Space size='middle'>
-          <button className='edit'>
+          <button className='edit' onClick={() => handleEdit('teams/' + _.id)}>
             <Icons.Edit />
           </button>
           <button className='delete' onClick={() => onDeleteModalOpen(_.id, _.team_name)}>

@@ -1,6 +1,6 @@
 import { BadRequestError } from "../../../../common/errors/bad-request-error";
 import { Request, Response } from "express";
-import { Team } from "../../../../models";
+import { Employee, Team } from "../../../../models";
 
 export const updateTeamHandler = async (req: Request, res: Response) => {
   try {
@@ -9,6 +9,19 @@ export const updateTeamHandler = async (req: Request, res: Response) => {
 
     const team = await Team.findById(id);
     if (!team) throw new BadRequestError("Team Not Found");
+    //check if any of the members are from other teams or empty
+    const memberAlreadyOnOtherTeamOrUnassigned = await Employee.find({
+      _id: { $in: members },
+      team: { $ne: team.id },
+    });
+
+    const memberAlreadyOnOtherTeam =
+      memberAlreadyOnOtherTeamOrUnassigned.filter(
+        (member) => member.team.length
+      );
+    if (memberAlreadyOnOtherTeam.length)
+      throw new BadRequestError("Member already on other team");
+
     //update team
     team.name = name || team.name;
     team.password = password || team.password;
