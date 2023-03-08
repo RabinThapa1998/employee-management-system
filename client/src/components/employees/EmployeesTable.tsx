@@ -18,11 +18,12 @@ import { Icons } from '~/assets';
 import { useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
+import { useNavigate } from 'react-router-dom';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
   const [employeeDrawer, setEmployeeDrawer] = useState<any>({});
-
+  const navigate = useNavigate();
   const { token } = theme.useToken();
 
   const openEmployeeDrawer = (data: any) => {
@@ -32,6 +33,9 @@ export function EmployeesTable() {
 
   const closeEmployeeDrawer = () => {
     setOpen(false);
+  };
+  const handleEdit = (id: string) => {
+    navigate(id);
   };
   const columns: ColumnsType<IEmployeeSummary> = [
     {
@@ -94,7 +98,7 @@ export function EmployeesTable() {
           <button className='visibility' onClick={() => openEmployeeDrawer(_)}>
             <Icons.Visibility />
           </button>
-          <button className='edit'>
+          <button className='edit' onClick={() => handleEdit(_.employee_id)}>
             <Icons.Edit />
           </button>
           <button className='delete'>
