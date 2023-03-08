@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   Button,
   Checkbox,
@@ -20,155 +19,39 @@ import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
 import { BillableHourField } from '~/common';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
-import { dateToUnix } from '~/helpers';
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
-type option = {
-  value: string | number | undefined;
-  label: string;
-}[];
-interface IForm {
-  name: string;
-  label: string;
-  placeholder?: string;
-  options?: option;
-  type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
-  required: boolean;
-}
-
-const basicInformation: IForm[] = [
-  {
-    name: 'name',
-    label: 'Name',
-    placeholder: 'Enter name',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'middle_name',
-    label: 'Middle Name',
-    placeholder: 'Enter middle name',
-    type: 'string',
-    required: false,
-  },
-  {
-    name: 'surname',
-    label: 'Surname',
-    placeholder: 'Enter surname',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'dob',
-    label: 'Birth Date',
-    placeholder: 'DD/MM/YYYY',
-    type: 'date',
-    required: true,
-  },
-  {
-    name: 'gender',
-    label: 'Gender',
-    options: [
-      {
-        value: 'male',
-        label: 'Male',
-      },
-      {
-        value: 'female',
-        label: 'Female',
-      },
-      {
-        value: 'other',
-        label: 'Other',
-      },
-    ],
-    placeholder: 'Choose Gender',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'address',
-    label: 'Address',
-    placeholder: 'Enter Address',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'phone_number',
-    label: 'Phone Number',
-    placeholder: 'Enter Phone Number',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'email',
-    label: 'Email Address',
-    placeholder: 'Enter Email Address',
-    type: 'email',
-    required: true,
-  },
-];
-const workingHours: IForm[] = [
-  {
-    name: 'starts_at',
-    label: 'Starts At',
-    placeholder: 'HH-MM',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'ends_at',
-    label: 'Ends In',
-    placeholder: 'HH-MM',
-    type: 'string',
-    required: true,
-  },
-];
-const jobs: IForm[] = [
-  {
-    name: 'job_position',
-    label: 'Job Position',
-    placeholder: 'Enter Job Position',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'team',
-    label: 'Team',
-    placeholder: 'Choose Team',
-    options: [
-      {
-        value: 'available',
-        label: 'Available',
-      },
-    ],
-    type: 'string',
-    required: true,
-  },
-];
-const billableInformation = [
-  {
-    name: 'is_billable',
-    label: 'This user is billable',
-    type: 'checkbox',
-    required: true,
-  },
-  {
-    name: 'billable_hrs',
-    label: 'Billable Hours',
-    placeholder: 'Enter Billable Hours',
-    required: true,
-  },
-];
-
+import { dateToUnix, unixToDate } from '~/helpers';
+import { useParams } from 'react-router-dom';
+import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
+import moment from 'moment';
+import dayjs from 'dayjs';
 const { useToken } = theme;
 export function EditEmployeeForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
+  const { id } = useParams();
+  const [form] = Form.useForm<any>();
+
+  const { data } = useQuery(
+    ['get-employee', id],
+    () =>
+      fetch(new URL(`employee/${id}`, API_BASE_URL))
+        .then((res) => res.json())
+        .then((d) => d.data),
+    {
+      onSuccess: (response) => {
+        form.setFieldsValue({
+          ...response,
+          starts_at: dayjs(unixToDate(response.starts_at)),
+          dob: dayjs(unixToDate(response.dob)),
+          ends_at: dayjs(unixToDate(response.ends_at)),
+          team: response.team.length === 0 ? 'available' : response.team[0].name,
+        });
+      },
+    },
+  );
+  console.log('🚀 ~ file: EditEmployeeForm.tsx:176 ~ EditEmployeeForm ~ data:', data);
 
   const { mutate, isLoading } = useMutation(
     (values: any) =>
@@ -217,6 +100,9 @@ export function EditEmployeeForm() {
     }
     dispatch(add(values));
   };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
+  };
 
   const { token } = useToken();
   return (
@@ -225,8 +111,9 @@ export function EditEmployeeForm() {
       <Row style={{ background: 'white', padding: '30px 60px', borderRadius: '5px' }}>
         <Col span={24}>
           <Form
-            name='basic'
+            name='employee-form'
             initialValues={{ remember: true }}
+            form={form}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete='off'
