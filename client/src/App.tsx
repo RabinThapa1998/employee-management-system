@@ -1,5 +1,5 @@
 import { ListingLayout, MainLayout } from '~/common';
-import { Teams, Employees, AddEmployee, EditEmployee } from '~/page';
+import { Teams, Employees, AddEmployee, EditEmployee, EditTeam } from '~/page';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import { Provider } from 'react-redux';
@@ -48,6 +48,14 @@ function App() {
       element: (
         <MainLayout>
           <AddTeam />
+        </MainLayout>
+      ),
+    },
+    {
+      path: '/teams/:id',
+      element: (
+        <MainLayout>
+          <EditTeam />
         </MainLayout>
       ),
     },

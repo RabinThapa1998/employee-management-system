@@ -23,6 +23,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 const { Option } = Select;
 import { request } from '~/utils';
 import { ITeamSingleResponse } from '~/types';
+import { useParams } from 'react-router-dom';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -66,11 +67,24 @@ interface ITeamForm {
   members: string[];
   billable_hrs: number;
 }
-export function AddTeamForm() {
+export function EditTeamForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm<ITeamForm>();
   const memberData = Form.useWatch('members', form);
+  const { id } = useParams();
+
+  const { data } = useQuery(
+    ['get-team', id],
+    () => request(`team/${id}`).then((res) => res.data.data),
+    {
+      onSuccess: (response) => {
+        form.setFieldsValue({
+          ...response,
+        });
+      },
+    },
+  );
   const getAccBillableHrs = (members: string[]) => {
     if (members)
       return members.reduce((acc: number, curr: string) => {
@@ -97,7 +111,7 @@ export function AddTeamForm() {
   }, [employeeList]);
 
   const { mutate, isLoading } = useMutation(
-    (values: any) => request.post('team', values) as Promise<Response>,
+    (values: any) => request.patch('team', values) as Promise<Response>,
     {
       onSuccess: (res: Response) => {
         messageApi.open({
