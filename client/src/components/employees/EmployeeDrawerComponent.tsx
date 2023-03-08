@@ -12,6 +12,7 @@ import {
 } from 'antd';
 import { DividerComponent } from '~/common';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ title, desc, token }: { title: string; desc: string; token: any }) => (
   <Col span={12}>
@@ -47,6 +48,10 @@ export function EmployeeDrawerComponent({
   billableStatus,
   billableHours,
 }: IEmployeeDrawerComponent) {
+  const navigate = useNavigate();
+  const handleEdit = (id: string) => {
+    navigate(id);
+  };
   return (
     <Row>
       <Col span={24}>
@@ -105,6 +110,7 @@ export function EmployeeDrawerComponent({
             icon={<EditOutlined />}
             type='primary'
             style={{ width: '100%', marginTop: '30px' }}
+            onClick={() => handleEdit(id)}
           >
             Edit Profile
           </Button>
