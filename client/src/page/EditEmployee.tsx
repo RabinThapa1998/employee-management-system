@@ -14,7 +14,7 @@ export function EditEmployee() {
       link: '/employees',
     },
     {
-      title: 'Add Employee',
+      title: 'Edit Employee',
       link: '/:id',
     },
   ];

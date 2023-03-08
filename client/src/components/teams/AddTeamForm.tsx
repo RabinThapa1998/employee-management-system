@@ -20,9 +20,7 @@ import QRCode from 'react-qr-code';
 import { BillableHourField } from '~/common';
 import { API_BASE_URL } from '~/config';
 import { useMutation, useQuery } from '@tanstack/react-query';
-const { TreeNode } = TreeSelect;
 const { Option } = Select;
-import axios from 'axios';
 import { request } from '~/utils';
 import { ITeamSingleResponse } from '~/types';
 const onFinishFailed = (errorInfo: any) => {

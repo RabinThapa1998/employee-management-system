@@ -21,189 +21,29 @@ import { add, useAppDispatch } from '~/global-states';
 import { Icons } from '~/assets';
 import { BillableHourField } from '~/common';
 import { useMutation } from '@tanstack/react-query';
-import { API_BASE_URL } from '~/config';
 import { dateToUnix } from '~/helpers';
-
-const onFinishFailed = (errorInfo: any) => {
-  console.log('Failed:', errorInfo);
-};
-type option = {
-  value: string | number | undefined;
-  label: string;
-}[];
-interface IForm {
-  name: string;
-  label: string;
-  placeholder?: string;
-  options?: option;
-  type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
-  required: boolean;
-}
-
-const basicInformation: IForm[] = [
-  {
-    name: 'name',
-    label: 'Name',
-    placeholder: 'Enter name',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'middle_name',
-    label: 'Middle Name',
-    placeholder: 'Enter middle name',
-    type: 'string',
-    required: false,
-  },
-  {
-    name: 'surname',
-    label: 'Surname',
-    placeholder: 'Enter surname',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'dob',
-    label: 'Birth Date',
-    placeholder: 'DD/MM/YYYY',
-    type: 'date',
-    required: true,
-  },
-  {
-    name: 'gender',
-    label: 'Gender',
-    options: [
-      {
-        value: 'male',
-        label: 'Male',
-      },
-      {
-        value: 'female',
-        label: 'Female',
-      },
-      {
-        value: 'other',
-        label: 'Other',
-      },
-    ],
-    placeholder: 'Choose Gender',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'address',
-    label: 'Address',
-    placeholder: 'Enter Address',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'phone_number',
-    label: 'Phone Number',
-    placeholder: 'Enter Phone Number',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'email',
-    label: 'Email Address',
-    placeholder: 'Enter Email Address',
-    type: 'email',
-    required: true,
-  },
-];
-const workingHours: IForm[] = [
-  {
-    name: 'starts_at',
-    label: 'Starts At',
-    placeholder: 'HH-MM',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'ends_at',
-    label: 'Ends In',
-    placeholder: 'HH-MM',
-    type: 'string',
-    required: true,
-  },
-];
-const jobs: IForm[] = [
-  {
-    name: 'job_position',
-    label: 'Job Position',
-    placeholder: 'Enter Job Position',
-    type: 'string',
-    required: true,
-  },
-  {
-    name: 'team',
-    label: 'Team',
-    placeholder: 'Choose Team',
-    options: [
-      {
-        value: 'available',
-        label: 'Available',
-      },
-    ],
-    type: 'string',
-    required: true,
-  },
-];
-const billableInformation = [
-  {
-    name: 'is_billable',
-    label: 'This user is billable',
-    type: 'checkbox',
-    required: true,
-  },
-  {
-    name: 'billable_hrs',
-    label: 'Billable Hours',
-    placeholder: 'Enter Billable Hours',
-    required: true,
-  },
-];
+import { request } from '~/utils';
+import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
 
 const { useToken } = theme;
 export function AddEmployeeForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
 
-  const { mutate, isLoading } = useMutation(
-    (values: any) =>
-      fetch(new URL('employee', API_BASE_URL), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      }),
-    {
-      onSuccess: (res) => {
-        if (res.status === 200) {
-          messageApi.open({
-            type: 'success',
-            content: 'Employee added successfully',
-          });
-        } else {
-          res.json().then((data) => {
-            messageApi.open({
-              type: 'error',
-              content: data.errors[0].message,
-            });
-          });
-        }
-      },
-      onError: (error) => {
-        console.log('🚀 ~ file: AddEmployeeForm.tsx:183 ~ AddEmployeeForm ~ error:', error);
-        messageApi.open({
-          type: 'error',
-          content: 'Something went wrong Try again!',
-        });
-      },
+  const { mutate, isLoading } = useMutation((values: any) => request.post('employee', values), {
+    onSuccess: (res) => {
+      messageApi.open({
+        type: 'success',
+        content: 'Employee added successfully',
+      });
     },
-  );
+    onError: (error: any) => {
+      messageApi.open({
+        type: 'error',
+        content: error?.response?.data?.errors[0]?.message || 'Something went wrong Try again!',
+      });
+    },
+  });
 
   const onFinish = (values: any) => {
     const dob = dateToUnix(values.dob);
@@ -216,6 +56,9 @@ export function AddEmployeeForm() {
       mutate({ ...values, starts_at: starts_at, ends_at: ends_at, dob: dob });
     }
     dispatch(add(values));
+  };
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('Failed:', errorInfo);
   };
 
   const { token } = useToken();

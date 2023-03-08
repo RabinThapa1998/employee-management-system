@@ -25,19 +25,16 @@ import { dateToUnix, unixToDate } from '~/helpers';
 import { useParams } from 'react-router-dom';
 import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
 import dayjs from 'dayjs';
+import { request } from '~/utils';
 const { useToken } = theme;
 export function EditEmployeeForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const { id } = useParams();
   const [form] = Form.useForm<any>();
-
   const { data } = useQuery(
     ['get-employee', id],
-    () =>
-      fetch(new URL(`employee/${id}`, API_BASE_URL))
-        .then((res) => res.json())
-        .then((d) => d.data),
+    () => request(`employee/${id}`).then((res) => res.data.data),
     {
       onSuccess: (response) => {
         form.setFieldsValue({
@@ -52,34 +49,18 @@ export function EditEmployeeForm() {
   );
 
   const { mutate, isLoading } = useMutation(
-    (values: any) =>
-      fetch(new URL(`employee/${id}`, API_BASE_URL), {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      }),
+    (values: any) => request.patch(`employee/${id}`, values),
     {
       onSuccess: (res) => {
-        if (res.status === 200) {
-          messageApi.open({
-            type: 'success',
-            content: 'Updated successfully',
-          });
-        } else {
-          res.json().then((data) => {
-            messageApi.open({
-              type: 'error',
-              content: data.errors[0].message,
-            });
-          });
-        }
+        messageApi.open({
+          type: 'success',
+          content: 'Updated successfully',
+        });
       },
-      onError: (error) => {
+      onError: (error: any) => {
         messageApi.open({
           type: 'error',
-          content: 'Something went wrong Try again!',
+          content: error?.response?.data?.errors[0]?.message || 'Something went wrong Try again!',
         });
       },
     },

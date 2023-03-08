@@ -20,6 +20,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 import { useNavigate } from 'react-router-dom';
+import { request } from '~/utils';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
@@ -33,23 +34,21 @@ export function EmployeesTable() {
     data: employeeList,
     isLoading,
     refetch,
-  } = useQuery(['get-employee'], () =>
-    fetch(new URL('employee', API_BASE_URL)).then(
-      (res) => res.json() as Promise<IEmployeeResponse>,
-    ),
+  } = useQuery(
+    ['get-employee'],
+    () => request.get('employee').then((res) => res.data) as Promise<IEmployeeResponse>,
   );
   const { mutate: deleteMutate, isLoading: isDeleteLoading } = useMutation(
-    (id: string) => {
-      return fetch(new URL(`employee/${id}`, API_BASE_URL), {
-        method: 'DELETE',
-      }).then((res) => res.json());
-    },
+    (id: string) => request.delete(`employee/${id}`),
     {
       onSuccess: (res) => {
         message.success('Employee deleted successfully');
       },
-      onError: (err) => {
-        message.error('Something went wrong');
+      onError: (error: any) => {
+        messageApi.open({
+          type: 'error',
+          content: error?.response?.data?.errors[0]?.message || 'Something went wrong Try again!',
+        });
       },
       onSettled: () => {
         onDeleteModalClose();
