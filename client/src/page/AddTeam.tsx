@@ -11,7 +11,7 @@ export function AddTeam() {
     },
     {
       title: 'Teams',
-      link: '/Teams',
+      link: '/',
     },
     {
       title: 'Add Team',

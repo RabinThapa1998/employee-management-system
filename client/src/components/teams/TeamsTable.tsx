@@ -6,6 +6,7 @@ import { Icons } from '~/assets';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import QRCode from 'react-qr-code';
+import { request } from '~/utils';
 
 export function TeamsTable() {
   const [messageApi, contextHolder] = message.useMessage();
@@ -16,15 +17,14 @@ export function TeamsTable() {
     data: teamList,
     isLoading,
     refetch,
-  } = useQuery(['get-team'], () =>
-    fetch(new URL('team', API_BASE_URL)).then((res) => res.json() as Promise<ITeamResponse>),
+  } = useQuery(
+    ['get-team'],
+    () => request.get('team').then((res) => res.data) as Promise<ITeamResponse>,
   );
 
   const { mutate: deleteMutate, isLoading: isDeleteLoading } = useMutation(
     (id: string) => {
-      return fetch(new URL(`team/${id}`, API_BASE_URL), {
-        method: 'DELETE',
-      }).then((res) => res.json());
+      return request.delete(`team/${id}`);
     },
     {
       onSuccess: (res) => {

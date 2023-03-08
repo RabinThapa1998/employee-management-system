@@ -22,7 +22,9 @@ import { API_BASE_URL } from '~/config';
 import { useMutation, useQuery } from '@tanstack/react-query';
 const { TreeNode } = TreeSelect;
 const { Option } = Select;
-
+import axios from 'axios';
+import { request } from '~/utils';
+import { ITeamSingleResponse } from '~/types';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -97,32 +99,18 @@ export function AddTeamForm() {
   }, [employeeList]);
 
   const { mutate, isLoading } = useMutation(
-    (values: any) =>
-      fetch(new URL('team', API_BASE_URL), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(values),
-      }).then((res) => res.json()),
+    (values: any) => request.post('team', values) as Promise<Response>,
     {
-      onSuccess: (res) => {
-        if (res.status === 200) {
-          messageApi.open({
-            type: 'success',
-            content: 'Team added successfully',
-          });
-        } else {
-          messageApi.open({
-            type: 'error',
-            content: res.errors[0].message,
-          });
-        }
+      onSuccess: (res: Response) => {
+        messageApi.open({
+          type: 'success',
+          content: 'Team added successfully',
+        });
       },
-      onError: (error) => {
+      onError: (error: any) => {
         messageApi.open({
           type: 'error',
-          content: 'Something went wrong Try again!',
+          content: error?.response?.data?.errors[0]?.message || 'Something went wrong Try again!',
         });
       },
     },
@@ -263,7 +251,13 @@ export function AddTeamForm() {
                   token: { colorPrimary: token.colorWarning },
                 }}
               >
-                <Button type='primary' htmlType='submit' size='middle' style={{ width: '146px' }}>
+                <Button
+                  type='primary'
+                  htmlType='submit'
+                  size='middle'
+                  style={{ width: '146px' }}
+                  loading={isLoading}
+                >
                   Save
                 </Button>
               </ConfigProvider>

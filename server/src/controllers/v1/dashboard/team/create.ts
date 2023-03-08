@@ -13,10 +13,7 @@ export const createTeamHandler = async (req: Request, res: Response) => {
     const _employee = await Employee.find({
       _id: { $in: members },
     });
-    console.log(
-      "🚀 ~ file: create.ts:15 ~ createTeamHandler ~ _employee:",
-      _employee
-    );
+
     if (_employee.length !== members.length)
       throw new BadRequestError("Employee Not Found");
 
@@ -25,10 +22,7 @@ export const createTeamHandler = async (req: Request, res: Response) => {
       _id: { $in: members },
       team: { $eq: null },
     });
-    console.log(
-      "🚀 ~ file: create.ts:28 ~ createTeamHandler ~ _employeeInTeam:",
-      _employeeInTeam
-    );
+
     if (_employeeInTeam.length > 0)
       throw new BadRequestError("Employee Already in a Team");
 
