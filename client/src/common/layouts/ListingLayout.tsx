@@ -11,6 +11,9 @@ import { Icons } from '~/assets';
 import { Link, NavLink } from 'react-router-dom';
 import { DividerComponent } from '../DividerComponent';
 import { LinkComponent } from '../LinkComponent';
+import { request } from '~/utils';
+import { useQuery } from '@tanstack/react-query';
+import { IEmployeeResponse, ITeamResponse } from '~/types';
 
 const { Header, Sider, Content } = Layout;
 function OverviewCard({
@@ -57,6 +60,14 @@ function OverviewCard({
 
 export function ListingLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
+  const { data: teamList, isLoading: teamLoading } = useQuery(
+    ['get-team'],
+    () => request.get('team').then((res) => res.data) as Promise<ITeamResponse>,
+  );
+  const { data: employeeList, isLoading: employeeLoading } = useQuery(
+    ['get-employee'],
+    () => request.get('employee').then((res) => res.data) as Promise<IEmployeeResponse>,
+  );
   const {
     token: {
       colorBgContainer,
@@ -114,7 +125,7 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
               <OverviewCard
                 color={colorPrimary}
                 title={'Teams'}
-                count={23}
+                count={teamList?.data?.length ?? 0}
                 icon={<Icons.Teams />}
               />
             </Col>
@@ -122,7 +133,7 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
               <OverviewCard
                 color={colorWarning}
                 title={'Employees'}
-                count={23}
+                count={employeeList?.data?.length ?? 0}
                 icon={<Icons.Teams />}
               />
             </Col>
