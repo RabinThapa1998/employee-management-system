@@ -11,33 +11,62 @@ import {
   ConfigProvider,
   Avatar,
   Modal,
+  message,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { IEmployeeResponse, IEmployeeSummary } from '~/types';
-import { employeeSelector, useAppSelector } from '~/global-states';
 import { Icons } from '~/assets';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 import { useNavigate } from 'react-router-dom';
-import { CloseOutlined } from '@ant-design/icons';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [deleteEmployeeState, setDeleteEmployeeState] = useState<any>({});
   const [employeeDrawer, setEmployeeDrawer] = useState<any>({});
   const navigate = useNavigate();
   const { token } = theme.useToken();
+  const [messageApi, contextHolder] = message.useMessage();
+  const {
+    data: employeeList,
+    isLoading,
+    refetch,
+  } = useQuery(['get-employee'], () =>
+    fetch(new URL('employee', API_BASE_URL)).then(
+      (res) => res.json() as Promise<IEmployeeResponse>,
+    ),
+  );
+  const { mutate: deleteMutate, isLoading: isDeleteLoading } = useMutation(
+    (id: string) => {
+      return fetch(new URL(`employee/${id}`, API_BASE_URL), {
+        method: 'DELETE',
+      }).then((res) => res.json());
+    },
+    {
+      onSuccess: (res) => {
+        message.success('Employee deleted successfully');
+      },
+      onError: (err) => {
+        message.error('Something went wrong');
+      },
+      onSettled: () => {
+        onDeleteModalClose();
+        refetch();
+      },
+    },
+  );
 
-  const onDeleteModalOpen = () => {
+  const onDeleteModalOpen = (id: string, fullName: string) => {
     setOpenDeleteModal(true);
+    setDeleteEmployeeState({ id, fullName });
   };
   const onDeleteModalClose = () => {
     setOpenDeleteModal(false);
   };
-  const handleOk = () => {
-    console.log('OK');
-    onDeleteModalClose();
+  const handleDelete = () => {
+    deleteMutate(deleteEmployeeState.id);
   };
   const handleCancel = () => {
     console.log('Cancel');
@@ -119,18 +148,13 @@ export function EmployeesTable() {
           <button className='edit' onClick={() => handleEdit(_.employee_id)}>
             <Icons.Edit />
           </button>
-          <button className='delete' onClick={onDeleteModalOpen}>
+          <button className='delete' onClick={() => onDeleteModalOpen(_.employee_id, _.full_name)}>
             <Icons.Delete />
           </button>
         </Space>
       ),
     },
   ];
-  const { data: employeeList, isLoading } = useQuery(['get-employee'], () =>
-    fetch(new URL('employee', API_BASE_URL)).then(
-      (res) => res.json() as Promise<IEmployeeResponse>,
-    ),
-  );
 
   const employeeFormattedData = useMemo(() => {
     const temp = employeeList?.data.map((item, idx) => {
@@ -153,6 +177,7 @@ export function EmployeesTable() {
 
   return (
     <>
+      {contextHolder}
       <Table
         columns={columns}
         loading={isLoading}
@@ -161,16 +186,15 @@ export function EmployeesTable() {
         className='table'
       />
       <Modal
-        title={<Typography.Title level={1}>Delete Team</Typography.Title>}
+        title={<Typography.Title level={1}>Delete Employee</Typography.Title>}
         open={openDeleteModal}
-        onOk={handleOk}
+        onOk={handleDelete}
         onCancel={handleCancel}
-        closeIcon={<CloseOutlined />}
         footer={
           <Row justify='start'>
             <Col>
               <Space>
-                <Button type='primary' onClick={handleOk} danger>
+                <Button type='primary' onClick={handleDelete} danger>
                   Delete
                 </Button>
                 <Button onClick={handleCancel} type='primary'>
@@ -182,9 +206,15 @@ export function EmployeesTable() {
         }
       >
         <Typography.Paragraph style={{ margin: '30px 0' }}>
-          Are you sure you want to delete John Doe from the list?
+          Are you sure you want to delete
+          <Typography.Text style={{ fontWeight: 800 }}>
+            {' '}
+            {deleteEmployeeState?.fullName}{' '}
+          </Typography.Text>
+          from the list?
         </Typography.Paragraph>
       </Modal>
+
       <Drawer
         title={<Typography.Title>Employee Information</Typography.Title>}
         placement='right'

@@ -104,7 +104,7 @@ export function AddTeamForm() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(values),
-      }),
+      }).then((res) => res.json()),
     {
       onSuccess: (res) => {
         if (res.status === 200) {
@@ -113,11 +113,9 @@ export function AddTeamForm() {
             content: 'Team added successfully',
           });
         } else {
-          res.json().then((data) => {
-            messageApi.open({
-              type: 'error',
-              content: data.errors[0].message,
-            });
+          messageApi.open({
+            type: 'error',
+            content: res.errors[0].message,
           });
         }
       },
