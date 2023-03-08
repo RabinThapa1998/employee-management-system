@@ -1,30 +1,57 @@
-import React, { useMemo } from 'react';
-import { message, Space, Table, Tag } from 'antd';
+import React, { useMemo, useState } from 'react';
+import { Button, Col, message, Modal, Row, Space, Table, Tag, Typography } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { ITeamResponse, ITeamTable } from '~/types';
 import { Icons } from '~/assets';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import QRCode from 'react-qr-code';
 
 export function TeamsTable() {
   const [messageApi, contextHolder] = message.useMessage();
+  const [deleteTeamState, setDeleteTeamState] = useState<any>({});
+  const [openDeleteModal, setOpenDeleteModal] = useState(false);
 
-  const { data: teamList, isLoading } = useQuery(['get-team'], () =>
+  const {
+    data: teamList,
+    isLoading,
+    refetch,
+  } = useQuery(['get-team'], () =>
     fetch(new URL('team', API_BASE_URL)).then((res) => res.json() as Promise<ITeamResponse>),
   );
-  const handleTeamDelete = (id: string) => {
-    fetch(new URL(`team/${id}`, API_BASE_URL), {
-      method: 'DELETE',
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.status === 'success') {
-          message.success('Team deleted successfully');
-        } else {
-          message.error('Something went wrong');
-        }
-      });
+
+  const { mutate: deleteMutate, isLoading: isDeleteLoading } = useMutation(
+    (id: string) => {
+      return fetch(new URL(`team/${id}`, API_BASE_URL), {
+        method: 'DELETE',
+      }).then((res) => res.json());
+    },
+    {
+      onSuccess: (res) => {
+        message.success('Team deleted successfully');
+      },
+      onError: (err) => {
+        message.error('Something went wrong');
+      },
+      onSettled: () => {
+        onDeleteModalClose();
+        refetch();
+      },
+    },
+  );
+
+  const onDeleteModalOpen = (id: string, TeamName: string) => {
+    setOpenDeleteModal(true);
+    setDeleteTeamState({ id, TeamName });
+  };
+  const onDeleteModalClose = () => {
+    setOpenDeleteModal(false);
+  };
+  const handleDelete = () => {
+    deleteMutate(deleteTeamState.id);
+  };
+  const handleCancel = () => {
+    onDeleteModalClose();
   };
   const columns: ColumnsType<any> = [
     {
@@ -80,7 +107,7 @@ export function TeamsTable() {
           <button className='edit'>
             <Icons.Edit />
           </button>
-          <button className='delete' onClick={() => handleTeamDelete(_.id)}>
+          <button className='delete' onClick={() => onDeleteModalOpen(_.id, _.team_name)}>
             <Icons.Delete />
           </button>
         </Space>
@@ -105,6 +132,7 @@ export function TeamsTable() {
   return (
     <>
       {contextHolder}
+
       <Table
         columns={columns}
         loading={isLoading}
@@ -112,6 +140,35 @@ export function TeamsTable() {
         pagination={{ position: ['bottomRight'] }}
         className='table'
       />
+      <Modal
+        title={<Typography.Title level={1}>Delete Team</Typography.Title>}
+        open={openDeleteModal}
+        onOk={handleDelete}
+        onCancel={handleCancel}
+        footer={
+          <Row justify='start'>
+            <Col>
+              <Space>
+                <Button type='primary' onClick={handleDelete} danger>
+                  Delete
+                </Button>
+                <Button onClick={handleCancel} type='primary'>
+                  Cancel
+                </Button>
+              </Space>
+            </Col>
+          </Row>
+        }
+      >
+        <Typography.Paragraph style={{ margin: '30px 0' }}>
+          Are you sure you want to delete
+          <Typography.Text style={{ fontWeight: 800 }}>
+            {' '}
+            {deleteTeamState?.TeamName}{' '}
+          </Typography.Text>
+          from the list?
+        </Typography.Paragraph>
+      </Modal>
     </>
   );
 }
