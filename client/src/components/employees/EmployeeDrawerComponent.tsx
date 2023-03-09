@@ -13,6 +13,8 @@ import {
 import { DividerComponent } from '~/common';
 import { EditOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import { unixToDate } from '~/helpers';
+import dayjs from 'dayjs';
 
 const Card = ({ title, desc, token }: { title: string; desc: string; token: any }) => (
   <Col span={12}>
@@ -88,7 +90,11 @@ export function EmployeeDrawerComponent({
       <DividerComponent />
       <Col span={24}>
         <Row>
-          <Card title='Start Date' desc={startDate} token={token} />
+          <Card
+            title='Start Date'
+            desc={dayjs(unixToDate(startDate)).format('DD/MM/YYYY')}
+            token={token}
+          />
           <Card title='Role' desc={role} token={token} />
         </Row>
         <Row style={{ marginTop: '20px' }}>
