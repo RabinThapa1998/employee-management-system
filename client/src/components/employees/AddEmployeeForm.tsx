@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Button,
   Checkbox,
@@ -15,6 +15,7 @@ import {
   Space,
   ConfigProvider,
   message,
+  Avatar,
 } from 'antd';
 import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
@@ -24,10 +25,13 @@ import { useMutation } from '@tanstack/react-query';
 import { dateToUnix } from '~/helpers';
 import { request } from '~/utils';
 import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
+import { UserOutlined } from '@ant-design/icons';
 
 const { useToken } = theme;
 export function AddEmployeeForm() {
   const dispatch = useAppDispatch();
+  const ref = useRef<any>();
+  const [profileUrl, setProfileUrl] = useState<any>(null);
   const [messageApi, contextHolder] = message.useMessage();
 
   const { mutate, isLoading } = useMutation((values: any) => request.post('employee', values), {
@@ -44,7 +48,10 @@ export function AddEmployeeForm() {
       });
     },
   });
-
+  const handleImageUpload = () => {
+    ref?.current.click();
+    setProfileUrl(URL.createObjectURL(ref.current?.files[0]));
+  };
   const onFinish = (values: any) => {
     const dob = dateToUnix(values.dob);
     const starts_at = dateToUnix(values.starts_at);
@@ -80,7 +87,7 @@ export function AddEmployeeForm() {
             <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
               <Col span={4}>
                 <Row justify={'end'}>
-                  <Icons.Profile />
+                  <Avatar size={120} icon={<UserOutlined />} src={profileUrl} />
                 </Row>
               </Col>
               <Col span={20}>
@@ -92,9 +99,17 @@ export function AddEmployeeForm() {
                     token: { colorPrimary: token.colorSuccess },
                   }}
                 >
-                  <Button type='primary' icon={<Icons.Upload />}>
+                  <Button type='primary' icon={<Icons.Upload />} onClick={handleImageUpload}>
                     Upload Profile Image
                   </Button>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    ref={ref}
+                    style={{
+                      display: 'none',
+                    }}
+                  />
                 </ConfigProvider>
               </Col>
             </Row>
