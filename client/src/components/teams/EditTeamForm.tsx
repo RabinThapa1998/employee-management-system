@@ -25,6 +25,7 @@ const { Option } = Select;
 import { request } from '~/utils';
 import { ITeamSingleResponse } from '~/types';
 import { useParams } from 'react-router-dom';
+import { downloadQRCode } from '~/helpers';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -237,7 +238,7 @@ export function EditTeamForm() {
             </TableSectionWrapper>
             <TableSectionWrapper title='Team QR' align={'middle'} gutter={16} withDivider={false}>
               <Col span={4}>
-                <QRCode value={qrValue} className='qr-code' />
+                <QRCode value={qrValue} className='qr-code' id='QRCode' />
               </Col>
               <Col span={4}>
                 <ConfigProvider
@@ -245,7 +246,7 @@ export function EditTeamForm() {
                     token: { colorBorder: token.colorPrimary, colorText: token.colorPrimary },
                   }}
                 >
-                  <Button icon={<PrinterFilled />} style={{ width: '135px' }}>
+                  <Button icon={<PrinterFilled />} style={{ width: '135px' }} htmlType='button'>
                     Print
                   </Button>
                 </ConfigProvider>
@@ -258,7 +259,12 @@ export function EditTeamForm() {
                     },
                   }}
                 >
-                  <Button icon={<DownloadOutlined />} style={{ width: '135px' }}>
+                  <Button
+                    icon={<DownloadOutlined />}
+                    style={{ width: '135px' }}
+                    onClick={downloadQRCode}
+                    htmlType='button'
+                  >
                     Download
                   </Button>
                 </ConfigProvider>

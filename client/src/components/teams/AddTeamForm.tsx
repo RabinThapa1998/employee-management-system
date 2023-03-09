@@ -19,11 +19,10 @@ import { add, useAppDispatch } from '~/global-states';
 import { DownloadOutlined, PrinterFilled } from '@ant-design/icons';
 import QRCode from 'react-qr-code';
 import { BillableHourField } from '~/common';
-import { API_BASE_URL } from '~/config';
 import { useMutation, useQuery } from '@tanstack/react-query';
 const { Option } = Select;
 import { request } from '~/utils';
-import { ITeamSingleResponse } from '~/types';
+import { downloadQRCode } from '~/helpers';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -221,7 +220,7 @@ export function AddTeamForm() {
             </TableSectionWrapper>
             <TableSectionWrapper title='Team QR' align={'middle'} gutter={16} withDivider={false}>
               <Col span={4}>
-                <QRCode value={qrValue} className='qr-code' />
+                <QRCode value={qrValue} className='qr-code' id='QRCode' />
               </Col>
               <Col span={4}>
                 <ConfigProvider
@@ -229,7 +228,7 @@ export function AddTeamForm() {
                     token: { colorBorder: token.colorPrimary, colorText: token.colorPrimary },
                   }}
                 >
-                  <Button icon={<PrinterFilled />} style={{ width: '135px' }}>
+                  <Button icon={<PrinterFilled />} style={{ width: '135px' }} htmlType='button'>
                     Print
                   </Button>
                 </ConfigProvider>
@@ -242,7 +241,12 @@ export function AddTeamForm() {
                     },
                   }}
                 >
-                  <Button icon={<DownloadOutlined />} style={{ width: '135px' }}>
+                  <Button
+                    icon={<DownloadOutlined />}
+                    style={{ width: '135px' }}
+                    onClick={downloadQRCode}
+                    htmlType='button'
+                  >
                     Download
                   </Button>
                 </ConfigProvider>
