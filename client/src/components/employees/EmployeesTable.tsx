@@ -12,12 +12,12 @@ import {
   Avatar,
   Modal,
   message,
+  Input,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { IEmployeeResponse, IEmployeeSummary } from '~/types';
 import { Icons } from '~/assets';
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { API_BASE_URL } from '~/config';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 import { useNavigate } from 'react-router-dom';
 import { request } from '~/utils';
@@ -173,14 +173,22 @@ export function EmployeesTable() {
     });
     return temp;
   }, [employeeList]);
+  const [employee, setEmployee] = useState(employeeFormattedData);
 
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const filtered = employeeFormattedData?.filter((item) => {
+      item.full_name.includes(e.target.value);
+    });
+    setEmployee(filtered);
+  };
   return (
     <>
       {contextHolder}
+      <Input placeholder='Search' onChange={handleSearch} />
       <Table
         columns={columns}
         loading={isLoading}
-        dataSource={employeeFormattedData}
+        dataSource={employee}
         pagination={{ position: ['bottomRight'] }}
         className='table'
       />
