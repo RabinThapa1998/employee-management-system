@@ -17,7 +17,17 @@ Node ⚡ Express ⚡ MongoDB
 clone the repository
 
 ```bash
- git clone https://github.com/RabinThapa1998/github_repo_search.git
+ git clone https://github.com/RabinThapa1998/webo.git
+```
+
+server
+###note: you need to have add MONGO_URI in .env file
+
+```bash
+cd server
+pnpm install
+pnpm dev
+--->localhost:8000
 ```
 
 client
@@ -27,13 +37,4 @@ cd client
 pnpm install
 pnpm dev
 --->localhost:5173
-```
-
-server
-
-```bash
-cd server
-pnpm install
-pnpm dev
---->localhost:8000
 ```
