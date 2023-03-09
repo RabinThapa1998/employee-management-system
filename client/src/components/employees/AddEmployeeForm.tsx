@@ -90,7 +90,14 @@ export function AddEmployeeForm() {
             <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
               <Col span={4}>
                 <Row justify={'end'}>
-                  <Avatar size={120} icon={<UserOutlined />} src={profileUrl} />
+                  <Avatar
+                    size={120}
+                    icon={<UserOutlined />}
+                    src={profileUrl}
+                    style={{
+                      minWidth: '120px',
+                    }}
+                  />
                 </Row>
               </Col>
               <Col span={20}>

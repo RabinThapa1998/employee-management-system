@@ -35,30 +35,61 @@ h6 {
   height: 100%;
 }
 
+.link-component {
+  height: 3.625rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0.3125rem 0.3125rem 0 0;
+  position: relative;
+  color: #656669;
+  transition: all 0.3s ease;
+}
+
+.link-component-active {
+  background-color: #f1f1f1;
+  color: #24252a;
+}
+.link-component:hover {
+  background-color: transparent;
+  color: #24252a;
+}
+.link-component-active::after {
+  content: '';
+  position: absolute;
+  bottom: -0.0625rem;
+  left: 0;
+  width: 100%;
+  height: 0.3125rem;
+  background-color: #f7921e;
+  border-radius: 0.3125rem 0.3125rem 0 0;
+}
+
 .ant-table-wrapper {
   width: 100% !important;
 }
 .table .ant-table-thead > tr > th {
   background: #fff !important;
   padding: 0;
-  font-size: 18px !important;
+  font-size: 1.125rem !important;
   font-weight: bold !important;
   border-radius: 0 !important;
   color: #656669 !important;
 }
 
 .table .ant-table-tbody > tr > td {
-  padding: 14px 0 !important;
+  padding: 0.875rem 0 !important;
   background: #fff !important;
-  font-size: 15px !important;
+  font-size: 0.9375rem !important;
 }
 
 .visibility {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   background: #20bc081a 0% 0% no-repeat padding-box;
-  border: 1px solid #20bc081a;
-  border-radius: 5px;
+  border: 0.0625rem solid #20bc081a;
+  border-radius: 0.3125rem;
   opacity: 1;
   display: grid;
   place-items: center;
@@ -68,11 +99,11 @@ h6 {
   background: #20bc080f 0% 0% no-repeat padding-box;
 }
 .edit {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   background: #1e83f71a 0% 0% no-repeat padding-box;
-  border: 1px solid #1e83f733;
-  border-radius: 5px;
+  border: 0.0625rem solid #1e83f733;
+  border-radius: 0.3125rem;
   opacity: 1;
   display: grid;
   cursor: pointer;
@@ -83,11 +114,11 @@ h6 {
 }
 
 .delete {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   background: #f71e1e1a 0% 0% no-repeat padding-box;
-  border: 1px solid #f71e1e1a;
-  border-radius: 5px;
+  border: 0.0625rem solid #f71e1e1a;
+  border-radius: 0.3125rem;
   opacity: 1;
   display: grid;
   place-items: center;
@@ -100,11 +131,11 @@ h6 {
 
 .ant-modal-close,
 .ant-drawer-close {
-  height: 32px !important;
-  width: 32px !important;
+  height: 2rem !important;
+  width: 2rem !important;
   background-color: #f71e1e1a !important;
   color: #f7541e !important;
-  border: 1px solid #f71e1e1a !important;
+  border: 0.0625rem solid #f71e1e1a !important;
 }
 .ant-modal-close:hover,
 .ant-drawer-close:hover {
@@ -118,15 +149,15 @@ h6 {
 }
 .billableHrs-container__input {
   width: 100%;
-  border-radius: 5px 0 0 5px;
+  border-radius: 0.3125rem 0 0 0.3125rem;
 }
 .billableHrs-container__hrs {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: 94px;
-  border-radius: 0 5px 5px 0;
+  width: 5.875rem;
+  border-radius: 0 0.3125rem 0.3125rem 0;
 }
 
 .ant-form-item-label {
@@ -140,27 +171,27 @@ h6 {
 .qr-code {
   width: 100%;
   height: 100%;
-  border: 1px solid #c3c1bf;
-  padding: 2px;
-  border-radius: 5px;
-  max-height: 118px;
-  max-width: 118px;
+  border: 0.0625rem solid #c3c1bf;
+  padding: 0.125rem;
+  border-radius: 0.3125rem;
+  max-height: 7.375rem;
+  max-width: 7.375rem;
 }
 .qr-code-small {
   width: 100%;
   height: 100%;
-  max-height: 31px;
-  max-width: 31px;
+  max-height: 1.9375rem;
+  max-width: 1.9375rem;
 }
 
 .go-back-arrow {
-  width: 32px;
-  height: 32px;
+  width: 2rem;
+  height: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5px;
-  border: 1px solid #c3c1bf;
+  border-radius: 0.3125rem;
+  border: 0.0625rem solid #c3c1bf;
   cursor: pointer;
   background: #f9f9f9;
 }
@@ -169,11 +200,27 @@ h6 {
 }
 
 .header {
-  padding: 0 22px;
+  padding: 0 1.375rem;
   background: #f9f9f9;
-  box-shadow: 0px 5px 15px #1201030f;
+  box-shadow: 0rem 0.3125rem 0.9375rem #1201030f;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-direction: row;
+}
+
+.overview-card-container {
+  border-radius: 5px;
+  padding: 12px 20px;
+}
+
+.overview-card-container__icon {
+  height: 42px;
+  width: 42px;
+  border-radius: 5px;
+  background-color: #ffffff33;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }

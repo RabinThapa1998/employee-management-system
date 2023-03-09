@@ -30,12 +30,8 @@ function OverviewCard({
 }) {
   return (
     <Row
-      style={{
-        // height: '88px',
-        backgroundColor: color,
-        borderRadius: '5px',
-        padding: '12px 20px',
-      }}
+      className='overview-card-container'
+      style={{ background: color }}
       align='middle'
       justify='space-between'
     >
@@ -48,20 +44,7 @@ function OverviewCard({
         </Typography.Title>
       </Col>
       <Col>
-        <div
-          style={{
-            height: '42px',
-            width: '42px',
-            borderRadius: '5px',
-            backgroundColor: '#FFFFFF33',
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          {icon}
-        </div>
+        <div className='overview-card-container__icon'>{icon}</div>
       </Col>
     </Row>
   );

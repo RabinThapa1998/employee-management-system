@@ -14,6 +14,7 @@ import {
   Space,
   ConfigProvider,
   message,
+  Avatar,
 } from 'antd';
 import { TableSectionWrapper } from './TableSectionWrapper';
 import { add, useAppDispatch } from '~/global-states';
@@ -26,12 +27,23 @@ import { useParams } from 'react-router-dom';
 import { basicInformation, billableInformation, jobs, workingHours } from './employeeformSchema';
 import dayjs from 'dayjs';
 import { request } from '~/utils';
+import { UserOutlined } from '@ant-design/icons';
+import { useRef, useState } from 'react';
 const { useToken } = theme;
 export function EditEmployeeForm() {
   const dispatch = useAppDispatch();
   const [messageApi, contextHolder] = message.useMessage();
   const { id } = useParams();
   const [form] = Form.useForm<any>();
+  const ref = useRef<any>();
+  const [profileUrl, setProfileUrl] = useState<any>(null);
+  const handleImageUpload = () => {
+    ref?.current.click();
+  };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) setProfileUrl(URL.createObjectURL(e.target.files[0]));
+  };
+
   const { data } = useQuery(
     ['get-employee', id],
     () => request(`employee/${id}`).then((res) => res.data.data),
@@ -102,7 +114,14 @@ export function EditEmployeeForm() {
             <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
               <Col span={4}>
                 <Row justify={'end'}>
-                  <Icons.Profile />
+                  <Avatar
+                    size={120}
+                    icon={<UserOutlined />}
+                    src={profileUrl}
+                    style={{
+                      minWidth: '120px',
+                    }}
+                  />
                 </Row>
               </Col>
               <Col span={20}>
@@ -114,9 +133,18 @@ export function EditEmployeeForm() {
                     token: { colorPrimary: token.colorSuccess },
                   }}
                 >
-                  <Button type='primary' icon={<Icons.Upload />}>
+                  <Button type='primary' icon={<Icons.Upload />} onClick={handleImageUpload}>
                     Upload Profile Image
                   </Button>
+                  <input
+                    type='file'
+                    accept='image/*'
+                    ref={ref}
+                    style={{
+                      display: 'none',
+                    }}
+                    onChange={handleImageChange}
+                  />
                 </ConfigProvider>
               </Col>
             </Row>
