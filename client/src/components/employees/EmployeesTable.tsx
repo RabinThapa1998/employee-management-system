@@ -19,8 +19,9 @@ import { IEmployeeResponse, IEmployeeSummary } from '~/types';
 import { Icons } from '~/assets';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { request } from '~/utils';
+import { PlusOutlined } from '@ant-design/icons';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
@@ -160,7 +161,7 @@ export function EmployeesTable() {
       return {
         id: idx + 1,
         full_name: item.name + ' ' + item.middle_name + ' ' + item.surname,
-        current_team: item.team.length ? item.team.map((i) => i.name) : 'Available',
+        current_team: item.team.length ? item.team.map((i) => i.name)[0] : 'Available',
         mobile_number: item.phone_number,
         email: item.email,
         designation: item.job_position,
@@ -184,7 +185,7 @@ export function EmployeesTable() {
         item.full_name.toLowerCase().includes(e.target.value.toLowerCase()),
       );
       const currentTeamFilter = employeeFormattedData?.filter((item) =>
-        item.current_team[0].toLowerCase().includes(e.target.value.toLowerCase()),
+        item.current_team.toLowerCase().includes(e.target.value.toLowerCase()),
       );
       const mobileFilter = employeeFormattedData?.filter((item) =>
         item.mobile_number.toLowerCase().includes(e.target.value.toLowerCase()),
@@ -199,12 +200,14 @@ export function EmployeesTable() {
         item.billable_hrs.toLowerCase().includes(e.target.value.toLowerCase()),
       );
       const filtered = [
-        ...fullNameFilter,
-        ...currentTeamFilter,
-        ...mobileFilter,
-        ...emailFilter,
-        ...designationFilter,
-        ...billableHrsFilter,
+        ...new Set([
+          ...fullNameFilter,
+          ...currentTeamFilter,
+          ...mobileFilter,
+          ...emailFilter,
+          ...designationFilter,
+          ...billableHrsFilter,
+        ]),
       ];
       console.log('🚀 ~ file: EmployeesTable.tsx:213 ~ handleSearch ~ filtered:', filtered);
       setEmployee(filtered);
@@ -215,7 +218,31 @@ export function EmployeesTable() {
   return (
     <>
       {contextHolder}
-      <Input placeholder='Search' onChange={handleSearch} />
+      <Space
+        direction='horizontal'
+        size='middle'
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          padding: '30px 20px',
+        }}
+      >
+        <Input placeholder='Search' onChange={handleSearch} />
+
+        <Link to='/add-employee'>
+          <ConfigProvider
+            theme={{
+              token: { colorPrimary: token.colorWarning },
+            }}
+          >
+            <Button type='primary' icon={<PlusOutlined />}>
+              Add Employee
+            </Button>
+          </ConfigProvider>
+        </Link>
+      </Space>
+
       <Table
         columns={columns}
         loading={isLoading}
