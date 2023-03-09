@@ -1,16 +1,16 @@
 # WEBO
 
-Full Stack Employee Management System
+A Full Stack Employee Management System
 
 ## Tech Stack
 
 ### Frontend
 
-Vite ⚡ React JS ⚡ AntDesign ⚡ React Router ⚡ React Query ⚡
+Vite ⚡ React JS ⚡ AntDesign ⚡ React Router ⚡ React Query ⚡ TypeScript ⚡ Axios ⚡
 
 ### Backend
 
-Node ⚡ Express ⚡ MongoDB
+Node ⚡ Express ⚡ MongoDB ⚡ TypeScript ⚡ Mongoose ⚡
 
 ## Installation
 
@@ -22,7 +22,7 @@ clone the repository
 
 server
 
-### note: you need to add MONGO_URI in .env file
+**_ note: you need to add MONGO_URI in .env file _**
 
 ```bash
 cd server
