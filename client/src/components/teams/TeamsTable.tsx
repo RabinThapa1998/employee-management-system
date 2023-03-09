@@ -6,7 +6,9 @@ import {
   Input,
   message,
   Modal,
+  Popover,
   Row,
+  Slider,
   Space,
   Table,
   Tag,
@@ -21,13 +23,16 @@ import { API_BASE_URL } from '~/config';
 import QRCode from 'react-qr-code';
 import { request } from '~/utils';
 import { Link, useNavigate } from 'react-router-dom';
-import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { FilterFilled, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 export function TeamsTable() {
   const [messageApi, contextHolder] = message.useMessage();
   const { token } = theme.useToken();
   const [deleteTeamState, setDeleteTeamState] = useState<any>({});
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [openPopover, setOpenPopover] = useState(false);
+  const [manHourFilterVal, setManHourFilterVal] = useState(0);
+
   const navigate = useNavigate();
   const {
     data: teamList,
@@ -170,6 +175,22 @@ export function TeamsTable() {
       setTeam(teamFormattedData);
     }
   };
+  const handleManHourFilterChange = (val: number) => {
+    setManHourFilterVal(val);
+  };
+  const handleManHourFilter = () => {
+    const totalManHrsFilter = teamFormattedData?.filter(
+      (item) => Number(item.total_man_hours) < manHourFilterVal,
+    );
+
+    setTeam(totalManHrsFilter);
+    setOpenPopover(false);
+  };
+  const handleManHourFilterReset = () => {
+    setManHourFilterVal(0);
+    setTeam(teamFormattedData);
+    setOpenPopover(false);
+  };
 
   return (
     <>
@@ -184,7 +205,54 @@ export function TeamsTable() {
           padding: '30px 20px',
         }}
       >
-        <Input placeholder='Search' onChange={handleSearch} prefix={<SearchOutlined />} />
+        <Space>
+          <Input placeholder='Search' onChange={handleSearch} prefix={<SearchOutlined />} />
+          <Popover
+            placement='bottomLeft'
+            title={'Filter'}
+            open={openPopover}
+            content={
+              <div
+                style={{
+                  width: '400px',
+                  padding: '15px 10px',
+                }}
+              >
+                <Typography.Text>Choose man hour range</Typography.Text>
+                <Slider
+                  tooltip={{ open: true }}
+                  defaultValue={8000}
+                  min={5000}
+                  max={20000}
+                  marks={{
+                    5000: '5000 Hours',
+                    8000: '8000 Hours',
+                    20000: '20000 Hours',
+                  }}
+                  onChange={handleManHourFilterChange}
+                />
+                <ConfigProvider
+                  theme={{
+                    token: { colorPrimary: token.colorWarning },
+                  }}
+                >
+                  <Button type='primary' onClick={handleManHourFilter}>
+                    Apply
+                  </Button>
+                </ConfigProvider>
+
+                <Button type='text' danger onClick={handleManHourFilterReset}>
+                  Clear Filter
+                </Button>
+              </div>
+            }
+            trigger='click'
+          >
+            <Button icon={<FilterFilled />} onClick={() => setOpenPopover(!openPopover)}>
+              Filter
+            </Button>
+          </Popover>
+        </Space>
 
         <Link to='/add-team'>
           <ConfigProvider
