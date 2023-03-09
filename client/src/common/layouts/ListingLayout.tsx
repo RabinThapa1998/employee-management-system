@@ -48,8 +48,16 @@ function OverviewCard({
       </Col>
       <Col>
         <div
-          className='h-[42px] w-[42px] flex flex-row items-center justify-center rounded-primary
-        bg-[#FFFFFF33]'
+          style={{
+            height: '42px',
+            width: '42px',
+            borderRadius: '5px',
+            backgroundColor: '#FFFFFF33',
+            display: 'flex',
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
           {icon}
         </div>
@@ -134,7 +142,7 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
                 color={colorWarning}
                 title={'Employees'}
                 count={employeeList?.data?.length ?? 0}
-                icon={<Icons.Teams />}
+                icon={<Icons.Employees />}
               />
             </Col>
           </Row>
