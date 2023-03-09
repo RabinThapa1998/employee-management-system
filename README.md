@@ -22,7 +22,7 @@ clone the repository
 
 server
 
-**_ note: you need to add MONGO_URI in .env file _**
+**_note: you need to add MONGO_URI in .env file_**
 
 ```bash
 cd server
