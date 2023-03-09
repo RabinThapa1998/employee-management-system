@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Col,
   Drawer,
@@ -174,12 +174,43 @@ export function EmployeesTable() {
     return temp;
   }, [employeeList]);
   const [employee, setEmployee] = useState(employeeFormattedData);
+  useEffect(() => {
+    setEmployee(employeeFormattedData);
+  }, [employeeFormattedData]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const filtered = employeeFormattedData?.filter((item) => {
-      item.full_name.includes(e.target.value);
-    });
-    setEmployee(filtered);
+    if (e.target.value && employeeFormattedData?.length) {
+      const fullNameFilter = employeeFormattedData?.filter((item) =>
+        item.full_name.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const currentTeamFilter = employeeFormattedData?.filter((item) =>
+        item.current_team[0].toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const mobileFilter = employeeFormattedData?.filter((item) =>
+        item.mobile_number.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const emailFilter = employeeFormattedData?.filter((item) =>
+        item.email.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const designationFilter = employeeFormattedData?.filter((item) =>
+        item.designation.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const billableHrsFilter = employeeFormattedData?.filter((item) =>
+        item.billable_hrs.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const filtered = [
+        ...fullNameFilter,
+        ...currentTeamFilter,
+        ...mobileFilter,
+        ...emailFilter,
+        ...designationFilter,
+        ...billableHrsFilter,
+      ];
+      console.log('🚀 ~ file: EmployeesTable.tsx:213 ~ handleSearch ~ filtered:', filtered);
+      setEmployee(filtered);
+    } else {
+      setEmployee(employeeFormattedData);
+    }
   };
   return (
     <>
