@@ -1,5 +1,18 @@
-import React, { useMemo, useState } from 'react';
-import { Button, Col, message, Modal, Row, Space, Table, Tag, Typography } from 'antd';
+import React, { useEffect, useMemo, useState } from 'react';
+import {
+  Button,
+  Col,
+  ConfigProvider,
+  Input,
+  message,
+  Modal,
+  Row,
+  Space,
+  Table,
+  Tag,
+  theme,
+  Typography,
+} from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import { ITeamResponse, ITeamTable } from '~/types';
 import { Icons } from '~/assets';
@@ -7,10 +20,12 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
 import QRCode from 'react-qr-code';
 import { request } from '~/utils';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 export function TeamsTable() {
   const [messageApi, contextHolder] = message.useMessage();
+  const { token } = theme.useToken();
   const [deleteTeamState, setDeleteTeamState] = useState<any>({});
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const navigate = useNavigate();
@@ -132,15 +147,62 @@ export function TeamsTable() {
     });
     return temp;
   }, [teamList]);
+  const [team, setTeam] = useState(teamFormattedData);
+
+  useEffect(() => {
+    setTeam(teamFormattedData);
+  }, [teamFormattedData]);
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value && teamFormattedData?.length) {
+      const teamNameFilter = teamFormattedData?.filter((item) =>
+        item.team_name.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const totalManHrsFilter = teamFormattedData?.filter((item) =>
+        item.total_man_hours.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const membersFilter = teamFormattedData?.filter((item) =>
+        item.members.toLowerCase().includes(e.target.value.toLowerCase()),
+      );
+      const filtered = [...new Set([...teamNameFilter, ...totalManHrsFilter, ...membersFilter])];
+      setTeam(filtered);
+    } else {
+      setTeam(teamFormattedData);
+    }
+  };
 
   return (
     <>
       {contextHolder}
+      <Space
+        direction='horizontal'
+        size='middle'
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          width: '100%',
+          padding: '30px 20px',
+        }}
+      >
+        <Input placeholder='Search' onChange={handleSearch} prefix={<SearchOutlined />} />
+
+        <Link to='/add-team'>
+          <ConfigProvider
+            theme={{
+              token: { colorPrimary: token.colorWarning },
+            }}
+          >
+            <Button type='primary' icon={<PlusOutlined />}>
+              Add Team
+            </Button>
+          </ConfigProvider>
+        </Link>
+      </Space>
 
       <Table
         columns={columns}
         loading={isLoading}
-        dataSource={teamFormattedData}
+        dataSource={team}
         pagination={{ position: ['bottomRight'] }}
         className='table'
       />
