@@ -90,3 +90,16 @@ export interface Member {
   name: string;
   id: string;
 }
+
+export type option = {
+  value: string | number | undefined;
+  label: string;
+}[];
+export interface IForm {
+  name: string;
+  label: string;
+  placeholder?: string;
+  options?: option;
+  type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
+  required: boolean;
+}

@@ -36,7 +36,7 @@ export function EditEmployeeForm() {
   const { id } = useParams();
   const [form] = Form.useForm<any>();
   const ref = useRef<any>();
-  const [profileUrl, setProfileUrl] = useState<any>(null);
+  const [profileUrl, setProfileUrl] = useState<string>('');
   const handleImageUpload = () => {
     ref?.current.click();
   };
@@ -98,7 +98,7 @@ export function EditEmployeeForm() {
   return (
     <>
       {contextHolder}
-      <Row style={{ background: 'white', padding: '30px 60px', borderRadius: '5px' }}>
+      <Row style={{ background: 'white', padding: '1.875rem 3.75rem', borderRadius: '.3125rem' }}>
         <Col span={24}>
           <Form
             name='employee-form'
@@ -111,7 +111,7 @@ export function EditEmployeeForm() {
             wrapperCol={{ span: 24 }}
             onChange={(e) => console.log(e)}
           >
-            <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
+            <Row align={'middle'} style={{ margin: '0 0 3.125rem 0' }} gutter={70}>
               <Col span={4}>
                 <Row justify={'end'}>
                   <Avatar
@@ -119,7 +119,7 @@ export function EditEmployeeForm() {
                     icon={<UserOutlined />}
                     src={profileUrl}
                     style={{
-                      minWidth: '120px',
+                      minWidth: '7.5rem',
                     }}
                   />
                 </Row>
@@ -299,7 +299,7 @@ export function EditEmployeeForm() {
                   size='middle'
                   loading={isLoading}
                   style={{
-                    minWidth: '146px',
+                    minWidth: '9.125rem',
                   }}
                 >
                   Save & Update

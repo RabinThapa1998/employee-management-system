@@ -31,7 +31,7 @@ const { useToken } = theme;
 export function AddEmployeeForm() {
   const dispatch = useAppDispatch();
   const ref = useRef<any>();
-  const [profileUrl, setProfileUrl] = useState<any>(null);
+  const [profileUrl, setProfileUrl] = useState<string>('');
   const [messageApi, contextHolder] = message.useMessage();
 
   const { mutate, isLoading } = useMutation((values: any) => request.post('employee', values), {
@@ -75,7 +75,7 @@ export function AddEmployeeForm() {
   return (
     <>
       {contextHolder}
-      <Row style={{ background: 'white', padding: '30px 60px', borderRadius: '5px' }}>
+      <Row style={{ background: 'white', padding: '1.875rem 3.75rem', borderRadius: '.3125rem' }}>
         <Col span={24}>
           <Form
             name='basic'
@@ -87,7 +87,7 @@ export function AddEmployeeForm() {
             wrapperCol={{ span: 24 }}
             onChange={(e) => console.log(e)}
           >
-            <Row align={'middle'} style={{ margin: '0 0 50px 0' }} gutter={70}>
+            <Row align={'middle'} style={{ margin: '0 0 3.125rem 0' }} gutter={70}>
               <Col span={4}>
                 <Row justify={'end'}>
                   <Avatar
@@ -95,7 +95,7 @@ export function AddEmployeeForm() {
                     icon={<UserOutlined />}
                     src={profileUrl}
                     style={{
-                      minWidth: '120px',
+                      minWidth: '7.5rem',
                     }}
                   />
                 </Row>
@@ -275,7 +275,7 @@ export function AddEmployeeForm() {
                   size='middle'
                   loading={isLoading}
                   style={{
-                    minWidth: '146px',
+                    minWidth: '9.125rem',
                   }}
                 >
                   Save

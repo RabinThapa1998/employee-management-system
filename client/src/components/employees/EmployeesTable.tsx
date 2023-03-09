@@ -104,14 +104,14 @@ export function EmployeesTable() {
       dataIndex: 'current_team',
       key: 'current_team',
 
-      width: 150,
+      width: 200,
     },
     {
       title: 'Mobile Number',
       dataIndex: 'mobile_number',
       key: 'mobile_number',
 
-      width: 150,
+      width: 200,
     },
     {
       title: 'Email Address',
@@ -125,21 +125,21 @@ export function EmployeesTable() {
       dataIndex: 'designation',
       key: 'designation',
 
-      width: 100,
+      width: 200,
     },
     {
       title: 'Billable Hours',
       dataIndex: 'billable_hrs',
       key: 'billable_hrs',
 
-      width: 150,
+      width: 200,
     },
 
     {
       title: 'Action',
       key: 'action',
 
-      width: 150,
+      width: 200,
       render: (_, record) => (
         <Space size='middle'>
           <button className='visibility' onClick={() => openEmployeeDrawer(_)}>
@@ -225,7 +225,7 @@ export function EmployeesTable() {
           display: 'flex',
           justifyContent: 'space-between',
           width: '100%',
-          padding: '30px 20px',
+          padding: '1.875rem 1.25rem',
         }}
       >
         <Input placeholder='Search' onChange={handleSearch} prefix={<SearchOutlined />} />
@@ -270,7 +270,7 @@ export function EmployeesTable() {
           </Row>
         }
       >
-        <Typography.Paragraph style={{ margin: '30px 0' }}>
+        <Typography.Paragraph style={{ margin: '1.875rem 0' }}>
           Are you sure you want to delete
           <Typography.Text style={{ fontWeight: 800 }}>
             {' '}

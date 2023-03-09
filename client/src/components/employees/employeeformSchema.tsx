@@ -1,15 +1,4 @@
-type option = {
-  value: string | number | undefined;
-  label: string;
-}[];
-interface IForm {
-  name: string;
-  label: string;
-  placeholder?: string;
-  options?: option;
-  type: 'string' | 'number' | 'date' | 'select' | 'checkbox' | 'time' | 'email';
-  required: boolean;
-}
+import { IForm } from '~/types';
 
 export const basicInformation: IForm[] = [
   {
