@@ -50,8 +50,11 @@ export function AddEmployeeForm() {
   });
   const handleImageUpload = () => {
     ref?.current.click();
-    setProfileUrl(URL.createObjectURL(ref.current?.files[0]));
   };
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files?.length) setProfileUrl(URL.createObjectURL(e.target.files[0]));
+  };
+
   const onFinish = (values: any) => {
     const dob = dateToUnix(values.dob);
     const starts_at = dateToUnix(values.starts_at);
@@ -109,6 +112,7 @@ export function AddEmployeeForm() {
                     style={{
                       display: 'none',
                     }}
+                    onChange={handleImageChange}
                   />
                 </ConfigProvider>
               </Col>
