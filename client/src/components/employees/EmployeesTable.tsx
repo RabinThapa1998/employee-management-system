@@ -21,7 +21,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import { EmployeeDrawerComponent } from './EmployeeDrawerComponent';
 import { Link, useNavigate } from 'react-router-dom';
 import { request } from '~/utils';
-import { PlusOutlined } from '@ant-design/icons';
+import { PlusOutlined, SearchOutlined } from '@ant-design/icons';
 
 export function EmployeesTable() {
   const [open, setOpen] = useState(false);
@@ -228,7 +228,7 @@ export function EmployeesTable() {
           padding: '30px 20px',
         }}
       >
-        <Input placeholder='Search' onChange={handleSearch} />
+        <Input placeholder='Search' onChange={handleSearch} prefix={<SearchOutlined />} />
 
         <Link to='/add-employee'>
           <ConfigProvider
