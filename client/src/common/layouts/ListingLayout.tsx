@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import {
+  ArrowLeftOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   UploadOutlined,
@@ -8,7 +9,7 @@ import {
 } from '@ant-design/icons';
 import { Col, Layout, Menu, Row, theme, Typography } from 'antd';
 import { Icons } from '~/assets';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { DividerComponent } from '../DividerComponent';
 import { LinkComponent } from '../LinkComponent';
 import { request } from '~/utils';
@@ -68,6 +69,7 @@ function OverviewCard({
 
 export function ListingLayout({ children }: { children: React.ReactNode }) {
   const [collapsed, setCollapsed] = useState(false);
+  const navigate = useNavigate();
   const { data: teamList, isLoading: teamLoading } = useQuery(
     ['get-team'],
     () => request.get('team').then((res) => res.data) as Promise<ITeamResponse>,
@@ -98,31 +100,13 @@ export function ListingLayout({ children }: { children: React.ReactNode }) {
           theme='dark'
           mode='inline'
           defaultSelectedKeys={['1']}
-          items={[
-            {
-              key: '1',
-              icon: <UserOutlined />,
-              label: 'nav 1',
-            },
-            {
-              key: '2',
-              icon: <VideoCameraOutlined />,
-              label: 'nav 2',
-            },
-            {
-              key: '3',
-              icon: <UploadOutlined />,
-              label: 'nav 3',
-            },
-          ]}
         />
       </Sider>
       <Layout className='site-layout'>
-        <Header style={{ padding: 0, background: colorBgContainer }}>
-          {React.createElement(collapsed ? MenuUnfoldOutlined : MenuFoldOutlined, {
-            className: 'trigger',
-            onClick: () => setCollapsed(!collapsed),
-          })}
+        <Header className='header'>
+          <button className='go-back-arrow' onClick={() => navigate(-1)}>
+            <ArrowLeftOutlined />
+          </button>
         </Header>
         <Content style={{ padding: '20px 22px' }}>
           <Typography.Title level={1} style={{ fontWeight: 800 }}>
