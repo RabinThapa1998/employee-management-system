@@ -16,7 +16,7 @@ import {
   Typography,
 } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
-import { ITeamResponse, ITeamTable } from '~/types';
+import { ITeamResponse, ITeamTable, Member } from '~/types';
 import { Icons } from '~/assets';
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { API_BASE_URL } from '~/config';
@@ -138,14 +138,22 @@ export function TeamsTable() {
       ),
     },
   ];
-
+  const memberStringFormatter = (members: Member[]) => {
+    const temp = members.filter((item, idx) => idx < 15);
+    const temp2 = temp.map((item) => item.name).join(',');
+    const remaining = members.length - 15;
+    if (remaining <= 0) {
+      return temp2;
+    }
+    return temp2 + ' &' + (members.length - 15).toString() + ' more';
+  };
   const teamFormattedData = useMemo(() => {
     const temp = teamList?.data.map((item, idx) => {
       const qrValue = 'team' + '=' + item.name + ' ' + 'password' + '=' + item.password;
       return {
         id: item.id,
         team_name: item.name,
-        members: item.members.map((i) => i.name).join(', '),
+        members: memberStringFormatter(item.members),
         mobile_qr_details: <QRCode value={qrValue} className='qr-code-small' />,
         total_man_hours: item.billable_hrs.toString(),
       };
