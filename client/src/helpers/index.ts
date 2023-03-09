@@ -1,2 +1,2 @@
-export * from './downloadQRCode';
+export * from './qrCodeMethods';
 export * from './unixConverter';

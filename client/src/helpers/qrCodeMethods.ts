@@ -16,3 +16,13 @@ export const downloadQRCode = () => {
   };
   img.src = `data:image/svg+xml;base64,${btoa(svgData)}`;
 };
+
+export const printQRCode = () => {
+  const qrCode = document.getElementById('QRCode')!;
+  const printWindow = window.open('', '', 'height=400,width=600');
+  printWindow?.document.write('<html><head><title>Print SVG</title></head><body>');
+  printWindow?.document.write(qrCode.outerHTML);
+  printWindow?.document.write('</body></html>');
+  printWindow?.document.close();
+  printWindow?.print();
+};

@@ -25,7 +25,7 @@ const { Option } = Select;
 import { request } from '~/utils';
 import { ITeamSingleResponse } from '~/types';
 import { useParams } from 'react-router-dom';
-import { downloadQRCode } from '~/helpers';
+import { downloadQRCode, printQRCode } from '~/helpers';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -246,7 +246,12 @@ export function EditTeamForm() {
                     token: { colorBorder: token.colorPrimary, colorText: token.colorPrimary },
                   }}
                 >
-                  <Button icon={<PrinterFilled />} style={{ width: '135px' }} htmlType='button'>
+                  <Button
+                    icon={<PrinterFilled />}
+                    style={{ width: '135px' }}
+                    htmlType='button'
+                    onClick={printQRCode}
+                  >
                     Print
                   </Button>
                 </ConfigProvider>

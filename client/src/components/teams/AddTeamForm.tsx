@@ -22,7 +22,7 @@ import { BillableHourField } from '~/common';
 import { useMutation, useQuery } from '@tanstack/react-query';
 const { Option } = Select;
 import { request } from '~/utils';
-import { downloadQRCode } from '~/helpers';
+import { downloadQRCode, printQRCode } from '~/helpers';
 const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
@@ -228,7 +228,12 @@ export function AddTeamForm() {
                     token: { colorBorder: token.colorPrimary, colorText: token.colorPrimary },
                   }}
                 >
-                  <Button icon={<PrinterFilled />} style={{ width: '135px' }} htmlType='button'>
+                  <Button
+                    icon={<PrinterFilled />}
+                    style={{ width: '135px' }}
+                    htmlType='button'
+                    onClick={printQRCode}
+                  >
                     Print
                   </Button>
                 </ConfigProvider>
