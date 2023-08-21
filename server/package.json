@@ -2,7 +2,7 @@
     "name": "error-handling",
     "version": "1.0.0",
     "description": "",
-    "main": "src/server.js",
+    "main": "dist/server.js",
     "scripts": {
         "start": "node build/server.js",
         "dev": "nodemon src/server.ts",
